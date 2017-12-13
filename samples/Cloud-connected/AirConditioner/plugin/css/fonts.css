@@ -1,0 +1,23 @@
+@CHARSET "UTF-8";
+
+.roboto-regular
+{
+    font-family: 'sec-roboto-light', Fallback, sans-serif;
+}
+
+.roboto-medium
+{
+    font-family: 'sec-roboto-light', Fallback, sans-serif;
+    font-weight: bold;
+}
+
+.roboto-condensed-regular
+{
+    font-family: 'sec-roboto-condensed', Fallback, sans-serif;
+}
+
+.roboto-condensed-bold
+{
+    font-family: 'sec-roboto-condensed', Fallback, sans-serif;
+    font-weight: bold;
+}

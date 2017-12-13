@@ -1,0 +1,61 @@
+<html>
+	<head>
+		<!-- Stylesheet-->
+		<link rel="stylesheet" type="text/css" href="css/style.css"/>
+
+		<!-- SAMSUNG CONNECT API -->
+		<script type="text/javascript" src="lib/SCPluginApi.js"></script>
+		<script type="text/javascript" src="js/capability_switch.js"></script>
+		<script type="text/javascript" src="js/capability_switchLevel.js"></script>
+		<script type="text/javascript" src="js/capability_colorTemperature.js"></script>
+		<script type="text/javascript" src="js/index.js"></script>
+	</head>
+
+
+	<body>
+		<!-- Action bar-->
+		<div id="action_bar">
+			<div id="action_bar_back_button" onclick="backAction()">
+				<img src="res/board_ic_arrow_left.png" style="width: 100%; height:auto;" id="icon_back"/>
+			</div>
+		</div>
+
+		<!-- Hearder-->
+		<div id="Header_bar">
+			<div id="action_bar_title">
+				<div id="action_bar_title_sub" class="roboto-condensed-bold">HOME - LIVING ROOM</div>
+				<div id="action_bar_title_main" class="roboto-condensed-bold">Light</div>
+			</div>
+			<div id="power_icon_back_circle" onclick="onPowerBtnClicked()">
+				<img class="svg-class" src="res/ic_power.svg"></img>
+			</div>
+		</div>
+
+		<!-- dimmer area-->
+		<div id="dimmer_area">
+			<div class="dimmer_sub_bar roboto-medium">Dimmer</div>
+			<div id="dimmer_area_bg1" align="center">
+				<div id="dimmer_area_bg2"></div>
+			</div>
+			<div id="switch_level_area_text">60%</div>
+		</div>
+
+			<!-- functional table -->
+			<div class="function_item">
+				<p class="function_item_multiline_1 roboto-condensed-regular">Dimmer</p>
+				<input type="range" min="0" max="100" step="5" id="dimmer_range" onchange="InputDimmer(this.id, this.value)">
+			</div>
+
+			<div class="function_item">
+				<div class="item_icon">
+						<img class ="colortemperature_icon">
+				</div>
+				<div class="item_body">
+					<div class="function_item_multiline">
+						<p class="function_item_multiline_1 roboto-condensed-regular">Color temperature</p>
+						<p class="function_item_multiline_2 roboto-condensed-regular" id="color_temperature">200k</p>
+					</div>
+				</div>
+			</div> <!-- functional table -->
+	</body>
+</html>
