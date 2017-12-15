@@ -37,6 +37,7 @@ var capabilityAirConditionerMode = {
 				case 'fanOnly': document.getElementById("comboMode").value = "FanOnly" ; break;
 				case 'heat': document.getElementById("comboMode").value = "Heat" ; break;
 				case 'heatClean': document.getElementById("comboMode").value = "HeatClean" ; break;
+				case 'notSupported': document.getElementById("comboMode").value = "NotSupported" ; break
 			}
 		}
 	},
@@ -53,6 +54,7 @@ var capabilityAirConditionerMode = {
 			case 'FanOnly': setRcsJson["modes"] = ["fanOnly"] ; break;
 			case 'Heat': setRcsJson["modes"] = ["heat"] ; break;
 			case 'HeatClean': setRcsJson["modes"] = ["heatClean"] ; break;
+			case 'NotSupported': setRcsJson["modes"] = ["notSupported"] ; break;
 		}
 
 		scplugin.log.debug(className, arguments.callee.name, setRcsJson);
