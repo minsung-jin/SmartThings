@@ -25,16 +25,25 @@ var capabilityAudioTrackData = {
 		scplugin.log.debug(className, arguments.callee.name, result);
 		scplugin.log.debug(className, arguments.callee.name, uri);
 
-		capabilitySwitch.powerState = rcsJsonString["power"];
 		if (result == "OCF_OK" || result == "OCF_RESOURCE_CHANGED" || result == "OCF_RES_ALREADY_SUBSCRIBED") {
-			if (title != null && title != "")
-				document.getElementById("title").innerHTML = rcsJsonString["title"];
-			else
+			if (title != null && title != "") {
+				var length = document.getElementById("title").scrollWidth / 10;
+				var string = rcsJsonString["title"];
+				if (length < string.length)
+					document.getElementById("title").innerHTML = string.substr(0,Math.floor(length)) + "...";
+				else
+					document.getElementById("title").innerHTML = string;
+			} else
 				document.getElementById("title").innerHTML = "Title";
 
-			if (artist != null && artist != "")
-	      document.getElementById("artist").innerHTML = rcsJsonString["artist"];
-			else
+			if (artist != null && artist != "") {
+				var length = document.getElementById("artist").scrollWidth / 10;
+				var string = rcsJsonString["artist"];
+				if (length < string.length)
+					document.getElementById("artist").innerHTML = string.substr(0,Math.floor(length)) + "...";
+				else
+					document.getElementById("artist").innerHTML = string;
+			} else
 				document.getElementById("artist").innerHTML = "CP name";
 
 		}
