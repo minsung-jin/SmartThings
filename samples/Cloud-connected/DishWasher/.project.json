@@ -1,0 +1,5 @@
+{
+  "name": "DishWasher",
+  "type": "ocf",
+  "outputPath": "out"
+}
