@@ -26,7 +26,14 @@ var capabilityColorTemperature = {
 		scplugin.log.debug(className, arguments.callee.name, uri);
 
 		if (result == "OCF_OK" || result == "OCF_RESOURCE_CHANGED" || result == "OCF_RES_ALREADY_SUBSCRIBED") {
-			document.getElementById("color_temperature").innerHTML = rcsJsonString["ct"] + "k";
+			var range = [0,0];
+			range = rcsJsonString["range"];
+			if (range[0] > rcsJsonString["ct"])
+				document.getElementById("color_temperature").innerHTML = range[0] + "k";
+			else if(range[1] < rcsJsonString["ct"])
+				document.getElementById("color_temperature").innerHTML = range[1] + "k";
+			else
+				document.getElementById("color_temperature").innerHTML = rcsJsonString["ct"] + "k";
 		}
 	}
 }

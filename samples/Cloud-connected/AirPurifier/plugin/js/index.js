@@ -69,12 +69,12 @@ function onPowerBtnClicked() {
 
 function onSelectFanSpeed(selectedItem) {
 	if(selectedItem.value == "High") {
-		capabilityFanspeed.set(100);
+		capabilityFanspeed.set(4);
 	} else if(selectedItem.value == "Medium") {
-		capabilityFanspeed.set(75);
+		capabilityFanspeed.set(3);
 	} else if (selectedItem.value == "Low") {
-		capabilityFanspeed.set(50);
+		capabilityFanspeed.set(2);
 	} else if(selectedItem.value == "Sleep") {
-		capabilityFanspeed.set(25);
+		capabilityFanspeed.set(1);
 	}
 }

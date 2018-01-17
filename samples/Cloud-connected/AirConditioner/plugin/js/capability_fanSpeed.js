@@ -16,6 +16,7 @@
 
 var capabilityFanspeed = {
 	'href' : "/capability/fanSpeed/main/0",
+	'range' : [0, 100],
 
 	'update' : function() {
 		ocfDevice.getRemoteRepresentation(this.href, this.onRepresentCallback);
@@ -26,11 +27,13 @@ var capabilityFanspeed = {
 		scplugin.log.debug(className, arguments.callee.name, uri);
 
 		if (result == "OCF_OK" || result == "OCF_RESOURCE_CHANGED" || result == "OCF_RES_ALREADY_SUBSCRIBED") {
-			if (rcsJsonString["fanSpeed"] <= 25)
+			capabilityFanspeed.range = rcsJsonString["range"];
+			var temp = parseInt((capabilityFanspeed.range[1] - capabilityFanspeed.range[0]) / 4);
+			if (rcsJsonString["fanSpeed"] <= capabilityFanspeed.range[0] + temp * 1)
 				document.getElementById("fanSpeed").innerHTML = "Sleep";
-			else if (rcsJsonString["fanSpeed"] <= 50)
+			else if (rcsJsonString["fanSpeed"] <= capabilityFanspeed.range[0] + temp * 2)
 				document.getElementById("fanSpeed").innerHTML = "Low";
-			else if (rcsJsonString["fanSpeed"] <= 75)
+			else if (rcsJsonString["fanSpeed"] <= capabilityFanspeed.range[0] + temp * 3)
 				document.getElementById("fanSpeed").innerHTML = "Medium";
 			else
 				document.getElementById("fanSpeed").innerHTML = "High";
@@ -40,15 +43,15 @@ var capabilityFanspeed = {
 	'set' : function(speed) {
 		scplugin.log.debug(className, arguments.callee.name, "speed : " + speed);
 		var setRcsJson = {};
-
+		var temp = parseInt((this.range[1] - this.range[0]) / 4);
 		if (speed == "high")
-			setRcsJson["fanSpeed"] = 100;
+			setRcsJson["fanSpeed"] = this.range[0] + temp * 4;
 		else if (speed == "medium")
-			setRcsJson["fanSpeed"] = 75;
+			setRcsJson["fanSpeed"] = this.range[0] + temp * 3;
 		else if (speed == "low")
-			setRcsJson["fanSpeed"] = 50;
+			setRcsJson["fanSpeed"] = this.range[0] + temp * 2;
 		else
-			setRcsJson["fanSpeed"] = 25;
+			setRcsJson["fanSpeed"] = this.range[0] + temp * 1;
 
 		ocfDevice.setRemoteRepresentation(this.href, setRcsJson, this.onRepresentCallback);
 		this.closeListbox();

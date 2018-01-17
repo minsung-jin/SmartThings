@@ -26,7 +26,15 @@ var capabilityTemperatureMeasurement_outdoor = {
 		scplugin.log.debug(className, arguments.callee.name, uri);
 
 		if (result == "OCF_OK" || result == "OCF_RESOURCE_CHANGED" || result == "OCF_RES_ALREADY_SUBSCRIBED") {
-			document.getElementById("outterTemp").innerHTML = rcsJsonString["temperature"];
+			var range = [0,0];
+			range = rcsJsonString["range"];
+			if (rcsJsonString["temperature"] > range[1])
+				document.getElementById("outterTemp").innerHTML = range[1];
+			else if (rcsJsonString["temperature"] < range[0])
+				document.getElementById("outterTemp").innerHTML = range[0];
+			else
+				document.getElementById("outterTemp").innerHTML = rcsJsonString["temperature"];
+
 			document.getElementById("outterUnit").innerHTML = "°" + rcsJsonString["units"];
 		}
 	}
