@@ -31,9 +31,9 @@ var capabilityMediaPlayback = {
 
 			var image = document.getElementById("playbutton");
 			if (this.value == "play") {
-				image.style.content = "url(res/controller_ic_play.svg)";
-			} else {
 				image.style.content = "url(res/controller_ic_pause.svg)";
+			} else {
+				image.style.content = "url(res/controller_ic_play.svg)";
 			}
 		}
 	},
