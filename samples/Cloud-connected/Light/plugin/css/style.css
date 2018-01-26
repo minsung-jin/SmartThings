@@ -204,6 +204,18 @@ body {
   position: relative;
 }
 
+#dimmer_sub_area {
+  height: 80%;
+  margin-top: 40px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+  position: relative;
+  text-align: center;
+  color: white;
+  font-size: 25px;
+}
+
 #dimmer_area_bg1 {
   position: absolute;
   top: 50%;
