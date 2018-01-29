@@ -38,7 +38,7 @@ var capabilityThermostatCoolingSetpoint = {
 				capabilityThermostatCoolingSetpoint.desieredTemperature = rcsJsonString["temperature"];
 
 			capabilityThermostatCoolingSetpoint.unit = rcsJsonString["units"];
-			document.getElementById("coolingsetTemp").innerHTML = capabilityThermostatCoolingSetpoint.desieredTemperature;
+			document.getElementById("coolingsetTemp").innerHTML = Math.round(capabilityThermostatCoolingSetpoint.desieredTemperature);
 
 			if (rcsJsonString["units"] == "K") {
 				document.getElementById("coolingsetUnit").innerHTML = "°K";
