@@ -27,8 +27,7 @@ var capabilitySwitchLevel = {
 		scplugin.log.debug(className, arguments.callee.name, uri);
 
 		if (result == "OCF_OK" || result == "OCF_RESOURCE_CHANGED" || result == "OCF_RES_ALREADY_SUBSCRIBED") {
-			var range = [0,0];
-			range = rcsJsonString["range"];
+			var range = rcsJsonString["range"];
 			if (rcsJsonString["dimmingSetting"] > range[1])
 				capabilitySwitchLevel.dimmingsetting = range[1];
 			else
