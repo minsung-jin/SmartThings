@@ -207,7 +207,7 @@ body {
   display: block;
   align-items: center;
   justify-content: center;
-  margin-top: 43px;
+  margin-top: 30px;
 }
 
 .mode_bar {
@@ -233,14 +233,13 @@ body {
   width: 100%;
   height: auto;
   margin: auto;
-  margin-top: 17px;
   vertical-align: middle;
   text-align: center;
 }
 
 .coolsingset_container {
   width: auto;
-  margin-top:40px;
+  margin-top:20px;
   text-align:center;
   margin-bottom:20px;
 }
@@ -291,7 +290,7 @@ body {
 }
 
 .status-container {
-	margin-top:30px;
+	margin-top:20px;
 	text-align:center;
 	margin-bottom:20px;
 }
