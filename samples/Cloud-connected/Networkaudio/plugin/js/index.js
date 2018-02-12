@@ -66,35 +66,49 @@ function backAction() {
 }
 
 function onPowerBtnClicked() {
+	if (document.getElementById("repeat_listbox").classList.contains('show'))
+		document.getElementById("repeat_listbox").classList.toggle("show", false);
 	capabilitySwitch.powerToggle();
 }
 
 function onSelectSource(selectedItem) {
-    capabilityMediaInputSource.set(selectedItem.value);
+	if (document.getElementById("repeat_listbox").classList.contains('show'))
+		document.getElementById("repeat_listbox").classList.toggle("show", false);
+  capabilityMediaInputSource.set(selectedItem.value);
 }
 
 function onPrevClicked() {
+	if (document.getElementById("repeat_listbox").classList.contains('show'))
+		document.getElementById("repeat_listbox").classList.toggle("show", false);
 	capabilityMediaTrackControl.set("previous");
 }
 
 function onPlayClicked() {
+	if (document.getElementById("repeat_listbox").classList.contains('show'))
+		document.getElementById("repeat_listbox").classList.toggle("show");
 	capabilityMediaPlayback.toggle();
 }
 
 function onNextClicked() {
+	if (document.getElementById("repeat_listbox").classList.contains('show'))
+		document.getElementById("repeat_listbox").classList.toggle("show", false);
 	capabilityMediaTrackControl.set("next");
 }
 
 function onVolumeClicked() {
+	if (document.getElementById("repeat_listbox").classList.contains('show'))
+		document.getElementById("repeat_listbox").classList.toggle("show", false);
 	capabilityAudioVolume.muteToggle();
 }
 
 function InputVolume(rangeId, rangeValue) {
-		capabilityAudioVolume.setVolume(parseInt(rangeValue));
+	if (document.getElementById("repeat_listbox").classList.contains('show'))
+		document.getElementById("repeat_listbox").classList.toggle("show", false);
+	capabilityAudioVolume.setVolume(parseInt(rangeValue));
 }
 
 function onSelectRepeate() {
-	document.getElementById("repeat_listbox").classList.toggle("show");
+	document.getElementById("repeat_listbox").classList.toggle("show", true);
 }
 
 function closeListBox(event) {
@@ -105,9 +119,9 @@ function closeListBox(event) {
 	var x = event.onmouseout.arguments["0"].clientX;
 	var y = event.onmouseout.arguments["0"].clientY;
 	if(x < x1 || x > x1+x2)
-		capabilityMediaPlaybackRepeat.closeListbox();
+		document.getElementById("repeat_listbox").classList.toggle("show", false);
 	else if(y < y1 || y > y1+y2)
-		capabilityMediaPlaybackRepeat.closeListbox();
+		document.getElementById("repeat_listbox").classList.toggle("show", false);
 }
 
 function onSelectOff() {
@@ -123,11 +137,15 @@ function onSelectAll() {
 }
 
 function onClickShuffle(suffleMode) {
+	if (document.getElementById("repeat_listbox").classList.contains('show'))
+		document.getElementById("repeat_listbox").classList.toggle("show", false);
 	if(suffleMode.checked == true) {
 		capabilityMediaPlaybackShuffle.set("enabled");
 		suffleMode.checked = false;
 	}
 	else {
+		if (document.getElementById("repeat_listbox").classList.contains('show'))
+			document.getElementById("repeat_listbox").classList.toggle("show", false);
 		capabilityMediaPlaybackShuffle.set("disabled");
 		suffleMode.checked = true;
 	}

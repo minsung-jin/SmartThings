@@ -52,17 +52,6 @@ var capabilityMediaPlaybackRepeat = {
 		var setRcsJson = {};
 		setRcsJson["modes"] = repeat;
 		ocfDevice.setRemoteRepresentation(this.href, setRcsJson, this.onRepresentCallback);
-		this.closeListbox();
-	},
-
-	'closeListbox' : function() {
-		var list = document.getElementsByClassName("repeat-listbox-content");
-		var i;
-	  for (i = 0; i < list.length; i++) {
-	    var openList = list[i];
-	    if (openList.classList.contains('show')) {
-	      openList.classList.remove('show');
-	    }
-	  }
+		document.getElementById("repeat_listbox").classList.toggle("show", false);
 	}
 }
