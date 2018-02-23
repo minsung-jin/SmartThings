@@ -27,6 +27,6 @@
   }],
   "metadata": {
     "vid": "SAMPLE-AIRPURIFIER-001",
-    "ocfDeviceType": "oic.d.airpurifier"
+    "deviceType": "AirPurifier"
   }
 }

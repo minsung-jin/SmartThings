@@ -18,6 +18,6 @@
   }],
   "metadata": {
     "vid": "SAMPLE-DISHWASHER-001",
-    "ocfDeviceType": "oic.d.dishwasher"
+    "deviceType": "Dishwasher"
   }
 }

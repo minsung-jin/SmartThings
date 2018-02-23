@@ -40,6 +40,6 @@
   }],
   "metadata": {
     "vid": "SAMPLE-AIRCONDITIONER-001",
-    "ocfDeviceType": "oic.d.airconditioner"
+    "deviceType": "AirConditioner"
   }
 }

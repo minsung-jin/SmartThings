@@ -27,6 +27,6 @@
   }],
   "metadata": {
     "vid": "SAMPLE-NETWORKAUDIO-001",
-    "ocfDeviceType": "oic.d.networkaudio"
+    "deviceType": "NetworkAudio"
   }
 }

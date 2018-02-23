@@ -15,6 +15,6 @@
   }],
   "metadata": {
     "vid": "SAMPLE-LIGHT-001",
-    "ocfDeviceType": "oic.d.light"
+    "deviceType": "Light"
   }
 }
