@@ -1,0 +1,153 @@
+#%RAML 0.8
+title: WWST Dish Washer mode
+version: v1.0.0-20170911
+documentation:
+  - title: Copyright (c) 2018 Samsung Electronics Co., Ltd. All rights reserved.
+  	       Copyright (c) 2016 Open Connectivity Foundation, Inc. All rights reserved.
+    content: |
+        Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+        1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+        2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+
+	      THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE OR WARRANTIES OF NON-INFRINGEMENT, ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
+schemas:
+- Mode: |
+    {
+      "id": "http://www.samsung.com/schemas/x.com.st.mode.dishwasher.json#",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "description": "Copyright (c) 2016, 2017 Open Connectivity Foundation, Inc. All rights reserved.",
+      "title": "WWST Mode",
+      "definitions": {
+        "x.com.st.mode.dishwasher": {
+          "type": "object",
+          "properties": {
+            "supportedModes": {
+              "type": "array",
+              "readOnly": true,
+              "description": "Array of possible modes the device supports.",
+              "items": {
+                "type": "string"
+              }
+            },
+            "modes": {
+              "type": "array",
+              "description": "Array of the currently active mode(s)",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "oic.baseResource.json#/definitions/oic.r.baseresource"
+        },
+        {
+          "$ref": "#/definitions/x.com.st.mode.dishwasher"
+        }
+      ],
+      "required": [
+        "supportedModes",
+        "modes"
+      ]
+    }
+- ModeUpdate: |
+    {
+      "id": "http://www.samsung.com/schemas/x.com.st.mode.dishwasher.json#",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "description": "Copyright (c) 2016, 2017 Open Connectivity Foundation, Inc. All rights reserved.",
+      "title": "WWST Mode Update",
+      "definitions": {
+        "x.com.st.mode.dishwasher": {
+          "type": "object",
+          "properties": {
+            "modes": {
+              "type": "array",
+              "description": "Desired mode",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "oic.baseResource.json#/definitions/oic.r.baseresource"
+        },
+        {
+          "$ref": "#/definitions/x.com.st.mode.dishwasher"
+        }
+      ],
+      "required": [
+        "modes"
+      ]
+    }
+
+traits:
+  - interface:
+      queryParameters:
+        if:
+          enum: ["oic.if.a","oic.if.s","oic.if.baseline"]
+
+/WWSTDishWashermodeResURI:
+  description: |
+        Dish Washer mode
+  displayName: WWST Dish Washer mode
+  is: [ interface ]
+
+  get:
+    description: |
+      Retrieves the current dish washer mode
+    responses:
+      200:
+        body:
+          application/json:
+            schema: Mode
+            example: |
+              {
+                "rt":             ["x.com.st.mode.dishwasher"],
+                "id":             "unique_example_id",
+                "modes": [ "auto" ],
+                "supportedModes": ["auto", "quick", "rinse", "dry"]
+              }
+
+  post:
+    description: |
+      Sets the desired dish washer mode
+    body:
+      application/json:
+        schema: ModeUpdate
+        example: |
+          {
+            "id":    "unique_example_id",
+            "modes": ["auto"]
+          }
+    responses:
+      200:
+        body:
+          application/json:
+            schema: ModeUpdate
+            example: |
+              {
+                "id":    "unique_example_id",
+                "modes": ["auto"]
+              }
+
+      403:
+        description: |
+          This response is generated by the OIC Server when the client sends:
+            An update with an value for mode that is not found in supportedModes.
+          The server responds with the current resource representation.
+        body:
+          application/json:
+            schema: Mode
+            example: |
+              {
+                "id":             "unique_example_id",
+                "modes": [ "auto" ],
+                "supportedModes": ["auto", "quick", "rinse", "dry"]
+              }

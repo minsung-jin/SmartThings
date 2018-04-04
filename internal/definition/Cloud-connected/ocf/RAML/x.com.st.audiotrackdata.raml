@@ -1,0 +1,97 @@
+#%RAML 0.8
+title: WWST Media Track Info
+version: v1.0.0-20170911
+documentation:
+  - title: Copyright (c) 2018 Samsung Electronics Co., Ltd. All rights reserved.
+  	       Copyright (c) 2016 Open Connectivity Foundation, Inc. All rights reserved.
+    content: |
+        Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+        1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+        2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+
+	      THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE OR WARRANTIES OF NON-INFRINGEMENT, ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
+schemas:
+- Mode: |
+    {
+      "id": "http://www.samsung.com/schemas/x.com.st.audiotrackdata.json#",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "description" : "Copyright (c) 2016, 2017 Open Connectivity Foundation, Inc. All rights reserved.",
+      "title": "WWST Media Track Info",
+      "definitions": {
+        "x.com.st.audiotrackdata": {
+          "type": "object",
+          "properties": {
+            "station": {
+              "type": "string",
+              "description": "Specifies the station of media"
+            },
+            "title": {
+              "type": "string",
+              "description": "Specifies the title of media track"
+            },
+            "artist": {
+              "type": "string",
+              "description": "Specifies the artist of media track"
+            },
+            "album": {
+              "type": "string",
+              "description": "Specifies the album of media track"
+            },
+            "trackNumber": {
+              "type": "integer",
+              "description": "Specifies the trackNumber of media track"
+            },
+            "trackUri": {
+              "type": "string",
+              "description": "Specifies the trackUri of media track"
+            },
+            "trackDescription": {
+              "type": "string",
+              "description": "Specifies the trackDescription of media track"
+            },
+            "thumbnail": {
+              "type": "string",
+              "description": "url of the thumbnail"
+            }
+          }
+        }
+      },
+      "type": "object",
+      "allOf": [
+      {"$ref": "oic.baseResource.json#/definitions/oic.r.baseresource"},
+      {"$ref": "#/definitions/x.com.st.audiotrackdata"}]
+    }
+
+traits:
+  - interface:
+      queryParameters:
+        if:
+          enum: ["oic.if.s","oic.if.baseline"]
+
+/WWSTMediaTrackInfoResURI:
+  description: |
+        Media infomation
+  displayName: WWST Media Track Info
+  is: [ interface ]
+
+  get:
+    description: |
+      Retrieves the current media track info
+    responses:
+      200:
+        body:
+          application/json:
+            schema: Mode
+            example: |
+              {
+                "rt": ["x.com.st.audiotrackdata"],
+                "id": "unique_example_id",
+                "station": "",
+                "title": "Example title",
+                "artist": "Example title",
+                "album": "",
+                "trackNumber": "",
+                "trackUri": "",
+                "trackDescription": "",
+                "thumbnail": ""
+              }
