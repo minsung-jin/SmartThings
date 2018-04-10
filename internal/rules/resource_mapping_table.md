@@ -28,7 +28,7 @@ Fan Speed	| main | x.com.st.fanspeed	| /capability/fanSpeed/main/0
 Filter Status	| main 	| x.com.st.filter	| /capability/filterStatus/main/0
 Garage Door Control	| main | x.com.st.garagedoorcontrol	| /capability/grageDoorControl/main/0
 Illuminance Measurement	| main | oic.r.sensor.illuminance	| /capability/illuminanceMeasurement/main/0
-Lock	| main | oic.d.smartlock	| /capability/lock/main/0
+Lock	| main | x.com.st.lock	| /capability/lock/main/0
 Media Input Source　	| main | x.com.st.mediainputsource	| /capability/mediaInputSource/main/0
 Media Playback	| main | x.com.st.mediaplayer	| /capability/mediaPlayback/main/0
 Media Playback Repeat	| main | x.com.st.mediarepeat	| /capability/mediaPlaybackRepeat/main/0
