@@ -21,6 +21,10 @@ var capabilities = [capabilitySwitch, capabilityAirConditionerMode, capabilityTh
 window.onload = function () {
 	console.log("version : 0.0.1");
 	init();
+
+	document.body.addEventListener('click', function () {
+		closeListBox();
+	})
 };
 
 function init() {
@@ -79,35 +83,42 @@ function onMinusBtnClicked() {
 	capabilityThermostatCoolingSetpoint.decrease();
 }
 
-function onSelectfanspeed() {
+function onSelectfanspeed(event) {
 	document.getElementById("listbox").classList.toggle("show");
+	event.stopPropagation();
 }
 
 function closeListBox(event) {
-	var x1 = event.offsetLeft;
-	var y1 = event.offsetTop;
-	var x2 = event.offsetWidth;
-	var y2 = event.offsetHeight;
-	var x = event.onmouseout.arguments["0"].clientX;
-	var y = event.onmouseout.arguments["0"].clientY;
-	if(x < x1 || x > x1+x2)
+	// var x1 = event.offsetLeft;
+	// var y1 = event.offsetTop;
+	// var x2 = event.offsetWidth;
+	// var y2 = event.offsetHeight;
+	// var x = event.onmouseout.arguments["0"].clientX;
+	// var y = event.onmouseout.arguments["0"].clientY;
+	// if(x < x1 || x > x1+x2)
+	// 	capabilityFanspeed.closeListbox();
+	// else if(y < y1 || y > y1+y2)
+	if (document.getElementById("listbox").classList.contains('show')) {
 		capabilityFanspeed.closeListbox();
-	else if(y < y1 || y > y1+y2)
-		capabilityFanspeed.closeListbox();
+	}
 }
 
 function onSelectHigh() {
 	capabilityFanspeed.set("high");
+	event.stopPropagation();
 }
 
 function onSelectMedium() {
 	capabilityFanspeed.set("medium");
+	event.stopPropagation();
 }
 
 function onSelectLow() {
 	capabilityFanspeed.set("low");
+	event.stopPropagation();
 }
 
 function onSelectSleep() {
 	capabilityFanspeed.set("sleep");
+	event.stopPropagation();
 }

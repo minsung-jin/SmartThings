@@ -1,5 +1,8 @@
+<!DOCTYPE html>
 <html>
 	<head>
+		<title>Dish Washer</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 		<!-- Stylesheet-->
 		<link rel="stylesheet" type="text/css" href="css/style.css"/>
 
@@ -14,71 +17,81 @@
 	<body>
 		<!-- Action bar-->
 		<div id="action_bar">
-			<div id="action_bar_back_button" onclick="backAction()">
+			<span id="action_bar_back_button" onclick="backAction()">
 				<img src="res/board_ic_arrow_left.png" style="width: 100%; height:auto;" id="icon_back"/>
-			</div>
-		</div>
-
-		<!-- Hearder-->
-		<div id="Header_bar">
-			<div id="action_bar_title">
+			</span>
+			<span id="action_bar_title">
 				<div id="action_bar_title_sub" class="roboto-condensed-bold">HOME - LAUNDRY ROOM</div>
 				<div id="action_bar_title_main" class="roboto-condensed-bold">DISH WASHER</div>
-			</div>
-			<div id="power_icon_back_circle" onclick="onPowerBtnClicked()">
-				<img class="svg-class"src="res/ic_power.svg"></img>
-			</div>
+			</span>
+			<span id="action_bar_more">
+			</span>
 		</div>
 
-		<!-- Dish Washer mode area-->
-		<div id="combo_area" align="center">
-			<select id="comboMode" class="mode_bar mode_bar_text roboto-condensed-bold" onchange="onSelectMode(this)">
-				<option value="auto">auto</option>
-				<option value="quick">quick</option>
-				<option value="rinse">rinse</option>
-				<option value="dry">dry</option>
-			</select>
-		</div>
-
-		<!-- job state area-->
-		<div id="state_area" align="center">
-			<div id="state_area_bg1">
-				<div id="state_area_bg2">
-					<div id="state_area_icon" onclick="OnSetStateClicked()">
-						<img class="svg-class" id="state" src="res/washer_ic_run.svg"></img>
+		<div class="row-custom">
+			<div class="left-col">
+				<!-- Header-->
+				<div id="header_bar">
+					<div id="power_icon_back_circle" onclick="onPowerBtnClicked()">
+						<img class="svg-class"src="res/ic_power.svg">
 					</div>
 				</div>
-			</div>
-		</div>
 
-		<!-- status bar -->
-		<div id="status_text_area">
-			<p id="ready_text1" class="status_text_ready1 roboto-regular">Please press start button</p>
-			<p id="ready_text2" class="status_text_ready2 roboto-regular">when you are ready</p>
-			<p id="run_text1" class="status_text_run1 roboto-regular" style="display:none">1 hr 36 min</p>
-			<p id="run_text2" class="status_text_run2 roboto-condensed-bold" style="display:none">Estimated finish time</p>
-			<p id="run_text3" class="status_text_run3 roboto-condensed-bold" style="display:none">02:21 PM</p>
-		</div> <!-- status bar -->
-
-		<!-- cancel button area -->
-		<div id="cancel_area" align="center">
-			<button id="cancel_button" type="button" class="mode_bar mode_bar_text roboto-condensed-bold" onclick="onCancelClicked()" style="visibility:hidden">Cancel</button>
-		</div>
-
-			<div class="function_item">
-				<div class="item_icon">
-						<img class ="energy_icon">
+				<!-- Dish Washer mode area-->
+				<div id="combo_area" align="center">
+					<select id="comboMode" class="mode_bar mode_bar_text roboto-condensed-bold" onchange="onSelectMode(this)">
+						<option value="auto">auto</option>
+						<option value="quick">quick</option>
+						<option value="rinse">rinse</option>
+						<option value="dry">dry</option>
+					</select>
 				</div>
-				<div class="item_body">
-					<div class="function_item_multiline">
-						<p class="function_item_multiline_1 roboto-condensed-regular">
-							Energy meter
-						</p>
-						<p class="function_item_multiline_2 roboto-condensed-regular" id="energyMeter">
-							20 kwh
-						</p>
+
+				<!-- job state area-->
+				<div id="state_area" align="center">
+					<div id="state_area_bg1">
+						<div id="state_area_bg2">
+							<div id="state_area_icon" onclick="OnSetStateClicked()">
+								<img class="svg-class" id="state" src="res/washer_ic_run.svg">
+							</div>
+						</div>
 					</div>
 				</div>
-			</div> <!-- functional table -->
+
+				<!-- status bar -->
+				<div id="status_text_area">
+					<p id="ready_text1" class="status_text_ready1 roboto-regular">Please press start button</p>
+					<p id="ready_text2" class="status_text_ready2 roboto-regular">when you are ready</p>
+					<p id="run_text1" class="status_text_run1 roboto-regular" style="display:none">1 hr 36 min</p>
+					<p id="run_text2" class="status_text_run2 roboto-condensed-bold" style="display:none">Estimated finish time</p>
+					<p id="run_text3" class="status_text_run3 roboto-condensed-bold" style="display:none">02:21 PM</p>
+				</div> <!-- status bar -->
+
+				<!-- cancel button area -->
+				<div id="cancel_area" align="center">
+					<button id="cancel_button" type="button" class="mode_bar mode_bar_text roboto-condensed-bold" onclick="onCancelClicked()" style="visibility:hidden">Cancel</button>
+				</div>
+			</div>
+
+			<div class="right-col">
+				<div class="function_item">
+					<div class="function_container">
+						<div class="item_icon energy_icon">
+							<!--<img class ="energy_icon">-->
+						</div>
+						<div class="item_body">
+							<div class="function_item_multiline">
+								<p class="function_item_multiline_1 roboto-condensed-regular">
+									Energy meter
+								</p>
+								<p class="function_item_multiline_2 roboto-condensed-regular" id="energyMeter">
+									20 kwh
+								</p>
+							</div>
+						</div>
+					</div>
+				</div> <!-- functional table -->
+			</div>
+		</div>
 	</body>
 </html>

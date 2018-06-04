@@ -1,5 +1,8 @@
+<!DOCTYPE html>
 <html>
 	<head>
+		<title>Light</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 		<!-- Stylesheet-->
 		<link rel="stylesheet" type="text/css" href="css/style.css"/>
 
@@ -15,49 +18,60 @@
 	<body>
 		<!-- Action bar-->
 		<div id="action_bar">
-			<div id="action_bar_back_button" onclick="backAction()">
+			<span id="action_bar_back_button" onclick="backAction()">
 				<img src="res/board_ic_arrow_left.png" style="width: 100%; height:auto;" id="icon_back"/>
-			</div>
-		</div>
-
-		<!-- Hearder-->
-		<div id="Header_bar">
-			<div id="action_bar_title">
+			</span>
+			<span id="action_bar_title">
 				<div id="action_bar_title_sub" class="roboto-condensed-bold">HOME - LIVING ROOM</div>
 				<div id="action_bar_title_main" class="roboto-condensed-bold">Light</div>
-			</div>
-			<div id="power_icon_back_circle" onclick="onPowerBtnClicked()">
-				<img class="svg-class" src="res/ic_power.svg"></img>
-			</div>
+			</span>
+			<span id="action_bar_more">
+			</span>
 		</div>
-
-		<!-- dimmer area-->
-		<div class="dimmer_sub_bar roboto-medium">Dimmer</div>
-		<div id="dimmer_area">
-			<div id="dimmer_sub_area">
-				<div id="dimmer_area_bg1">
-					<div id="dimmer_area_bg2"></div>
-				</div>
-			</div>
-			<div id="switch_level_area_text">60%</div>
-		</div>
-
-			<!-- functional table -->
-			<div class="function_item">
-				<p class="function_item_multiline_1 roboto-condensed-regular">Dimmer</p>
-				<input type="range" min="0" max="100" step="5" id="dimmer_range" onchange="InputDimmer(this.id, this.value)">
-			</div>
-
-			<div class="function_item">
-				<div class="item_icon">
-						<img class ="colortemperature_icon">
-				</div>
-				<div class="item_body">
-					<div class="function_item_multiline">
-						<p class="function_item_multiline_1 roboto-condensed-regular">Color temperature</p>
-						<p class="function_item_multiline_2 roboto-condensed-regular" id="color_temperature">200k</p>
+			
+		<div class="row-custom">
+			<div class="left-col">
+				<!-- Header-->
+				<div id="header_bar">
+					<div id="power_icon_back_circle" class="svg-class" onclick="onPowerBtnClicked()">
+						<!--<img class="svg-class" src="res/ic_power.svg"></img>-->
 					</div>
 				</div>
-			</div> <!-- functional table -->
+
+				<!-- dimmer area-->
+				<div class="dimmer_sub_bar roboto-medium">Dimmer</div>
+				<div id="dimmer_area">
+					<div id="dimmer_sub_area">
+						<div id="dimmer_area_bg1">
+							<div id="dimmer_area_bg2"></div>
+						</div>
+					</div>
+					<div id="switch_level_area_text">60%</div>
+				</div>
+				<!-- functional table -->
+				<div class="function_item">
+						<div class="function_container_borderless">
+							<p class="function_item_multiline_1 roboto-condensed-regular">Dimmer</p>
+							<input type="range" step="5" id="dimmer_range" onchange="InputDimmer(this.id, this.value)" style="--min: 0; --max: 100; --val: 50">
+						</div>
+					</div>
+			</div>
+
+			<div class="right-col">
+				<div class="function_item">
+					<div class="function_container">
+						<div class="item_icon colortemperature_icon">
+							<!--<img class ="colortemperature_icon">-->
+						</div>
+						<div class="item_body">
+							<div class="function_item_multiline">
+								<p class="function_item_multiline_1 roboto-condensed-regular">Color temperature</p>
+								<p class="function_item_multiline_2 roboto-condensed-regular" id="color_temperature">200k</p>
+							</div>
+						</div>
+					</div>
+				</div> <!-- functional table -->
+			</div>
+		</div>
 	</body>
 </html>

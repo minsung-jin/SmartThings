@@ -1,5 +1,10 @@
+<!DOCTYPE html>
 <html>
 	<head>
+		<title>Network Audio</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
 		<!-- Stylesheet-->
 		<link rel="stylesheet" type="text/css" href="css/style.css" />
 
@@ -18,102 +23,131 @@
 	<body>
 		<!-- Action bar-->
 		<div id="action_bar">
-			<div id="action_bar_back_button" onclick="backAction()">
+			<span id="action_bar_back_button" onclick="backAction()">
 				<img src="res/board_ic_arrow_left.png" style="width: 100%; height:auto;" id="icon_back"/>
-			</div>
-		</div>
-
-		<!-- Hearder-->
-		<div id="Header_bar">
-			<div id="action_bar_title">
+			</span>
+			<span id="action_bar_title">
 				<div id="action_bar_title_sub" class="roboto-condensed-bold">HOME - LIVING ROOM</div>
 				<div id="action_bar_title_main" class="roboto-condensed-bold">NETWORK AUDIO</div>
-			</div>
-			<div id="power_icon_back_circle" onclick="onPowerBtnClicked()">
-				<img class="svg-class" src="res/ic_power.svg"></img>
-			</div>
-		</div>
-
-		<!-- networkaudio input source combo area-->
-		<div id="combo_area" align="center">
-			<select id="comboSource" class="mode_bar mode_bar_text roboto-condensed-bold" onchange="onSelectSource(this)">
-				<option value="AM">AM</option>
-				<option value="CD">CD</option>
-				<option value="FM">FM</option>
-				<option value="HDMI">HDMI</option>
-				<option value="HDMI2">HDMI2</option>
-				<option value="USB">USB</option>
-				<option value="YouTube">YouTube</option>
-				<option value="aux">aux</option>
-				<option value="bluetooth">bluetooth</option>
-				<option value="digital">digital</option>
-				<option value="melon">melon</option>
-				<option value="wifi">wifi</option>
-			</select>
-		</div>
-
-		<!-- thumbnail circle area-->
-		<div class="thumbnail">
-			<img class="image-cropper"/>
-		</div>
-		<div id="title" class="roboto-medium" align="center">Title</div>
-		<div id="artist" class="roboto-medium">CP name</div>
-
-
-		<div class="play_controller" align="center">
-			<span id="prevbutton" onclick="onPrevClicked()" >
-				<img class="prev_button">
 			</span>
-			<span id="playbutton" onclick="onPlayClicked()">
-				<img class="play_button">
-			</span>
-			<span id="nextbutton" onclick="onNextClicked()">
-				<img class="next_button">
+			<span id="action_bar_more">
 			</span>
 		</div>
 
-		<div id="volume_controller">
-			<span id="volumebutton" onclick="onVolumeClicked()">
-				<img class="volume_icon">
-			</span>
-			<input type="range" min="0" max="100" step="1" id="volume_value" onchange="InputVolume(this.id, this.value)">
-		</div>
+		<div class="row-custom">
+			<div class="left-col">
+				<!-- Header-->
+				<div id="header_bar">
+					<div id="power_icon_back_circle" class="svg-class" onclick="onPowerBtnClicked()">
+						<!--<img class="svg-class" src="res/ic_power.svg"></img>-->
+					</div>
+				</div>
 
-		<!-- functional table -->
-		<div class="function_item">
-			<div class="item_icon">
-					<img class ="repeat_icon">
-			</div>
-			<div class="item_body">
-				<div class="function_item_multiline">
-					<p class="function_item_multiline_1 roboto-condensed-regular">Repeat</p>
-					<p class="function_item_multiline_2 roboto-condensed-regular" id="repeat">All</p>
+				<!-- networkaudio input source combo area-->
+				<div id="combo_area" align="center">
+					<select id="comboSource" class="mode_bar mode_bar_text roboto-condensed-bold" onchange="onSelectSource(this)">
+						<option value="AM">AM</option>
+						<option value="CD">CD</option>
+						<option value="FM">FM</option>
+						<option value="HDMI">HDMI</option>
+						<option value="HDMI2">HDMI2</option>
+						<option value="USB">USB</option>
+						<option value="YouTube">YouTube</option>
+						<option value="aux">aux</option>
+						<option value="bluetooth">bluetooth</option>
+						<option value="digital">digital</option>
+						<option value="melon">melon</option>
+						<option value="wifi">wifi</option>
+					</select>
+				</div>
+
+				<!-- thumbnail circle area-->
+				<div class="thumbnail">
+					<div class="image-cropper cropped-image">
+					</div>
+				</div>
+				<div id="title" class="roboto-medium" align="center">Title</div>
+				<div id="artist" class="roboto-medium">CP name</div>
+
+
+				<div class="play_controller" align="center">
+					<span id="prevbutton" class="prev_button prev-button" onclick="onPrevClicked()">
+						<!--<img class="prev_button" src="res/controller_ic_prev.svg">-->
+					</span>
+					<span id="playbutton" class="play_button play-button" onclick="onPlayClicked()">
+						<!--<img class="play_button" src="res/controller_ic_play.svg">-->
+					</span>
+					<span id="nextbutton" class="next_button next-button" onclick="onNextClicked()">
+						<!--<img class="next_button" src="res/controller_ic_next.svg">-->
+					</span>
+				</div>
+
+				<div id="volume_controller">
+					<table align="center">
+						<tr>
+							<td width="5%" align="right">
+								<span id="volumebutton" class="volume_icon" onclick="onVolumeClicked()">
+									<!--<img class="volume_icon" src="res/ic_volume.svg">-->
+								</span>
+							</td>
+							<td width="95%" align="left">
+								<input type="range" step="1" id="volume_value" onchange="InputVolume(this.id, this.value)" style="--min: 0; --max: 100; --val: 50">
+							</td>
+						</tr>
+					</table>
+					
+					<!--<span class="volume_icon volumebutton" onclick="onVolumeClicked()">
+						<	img class="volume_icon" src="res/ic_volume.svg">
+					</span>
+					<span>
+						<input type="range" min="0" max="100" step="1" id="volume_value" onchange="InputVolume(this.id, this.value)">
+					</span>-->
+					
 				</div>
 			</div>
-			<div class="item_icon">
-				<img class ="arrow_icon" id="repeat_arrow" onclick="onSelectRepeate()">
-				<div id="repeat_listbox" class="repeat-listbox-content" onmouseout="closeListBox(this)">
-					<a id="off" onclick="onSelectOff()">Off</a>
-				  <a id="one" onclick="onSelectOne()">One</a>
-				  <a id="all" onclick="onSelectAll()">All</a>
-				 </div>
-			</div>
-		</div>
+			
+			<div class="right-col">
+				<!-- functional table -->
+				<div class="function_item">
+					<div class="function_container">
+						<div class="item_icon repeat_icon">
+								<!--<img class ="repeat_icon" src="res/ic_function_Player_Repeat_Mode.svg">-->
+						</div>
+						<div class="item_body">
+							<div class="function_item_multiline">
+								<p class="function_item_multiline_1 roboto-condensed-regular">Repeat</p>
+								<p class="function_item_multiline_2 roboto-condensed-regular" id="repeat">All</p>
+							</div>
+						</div>
+						<div class="item_icon arrow_icon" id="repeat_arrow" onclick="onSelectRepeate(event)">
+							<!--<img class ="arrow_icon" id="repeat_arrow" onclick="onSelectRepeate()" src="res/list_ic_arrow.svg">-->
+							<div id="repeat_listbox" class="repeat-listbox-content">
+								<a href="#!" id="off" onclick="onSelectOff()">Off</a>
+								<a href="#!" id="one" onclick="onSelectOne()">One</a>
+								<a href="#!" id="all" onclick="onSelectAll()">All</a>
+							</div>
+						</div>
+					</div>
+				</div>
 
-		<div class="function_item">
-			<div class="item_icon">
-					<img class ="shuffle_icon">
-			</div>
-			<div class="item_body">
-				<div class="function_item_multiline">
-					<p class="function_item_multiline_1 roboto-condensed-regular">Shuffle</p>
-					<p class="function_item_multiline_2 roboto-condensed-regular" id="shuffle">Enable</p>
+				<div class="function_item">
+					<div class="function_container">
+						<div class="item_icon shuffle_icon">
+								<!--<img class ="shuffle_icon" src="res/ic_function_Player_Shuffle_Mode.svg">-->
+						</div>
+						<div class="item_body">
+							<div class="function_item_multiline">
+								<p class="function_item_multiline_1 roboto-condensed-regular">Shuffle</p>
+								<p class="function_item_multiline_2 roboto-condensed-regular" id="shuffle">Enable</p>
+							</div>
+						</div>
+						<label class="switch">
+							<input type="checkbox" id="shuffle_check" onclick="onClickShuffle(this)" checked>
+							<span class="slider" ></span>
+						</label>
+					</div>
 				</div>
 			</div>
-			<label class="switch">
-  			<input type="checkbox" id="shuffle_check" onclick="onClickShuffle(this)" checked>
-  			<span class="slider" ></span>
-			</label>
 		</div>
 	</body>
 </html>

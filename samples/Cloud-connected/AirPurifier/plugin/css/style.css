@@ -1,14 +1,14 @@
-@CHARSET "UTF-8";
+@charset "utf-8";
 @import url("fonts.css");
 body {
-    position: fixed;
+    /*position: fixed;*/
     width:100%;
     height:100%;
     top: 0px;
     bottom: 0px;
     left: 0px;
     right: 0px;
-    background-color: #fafafa;
+    background-color: white;
     margin: 0;
     padding: 0;
     display:flex;
@@ -25,9 +25,11 @@ body {
     display:flex;
 }
 
-#Header_bar {
+#header_bar {
     min-height: 50px;
     display:flex;
+    margin-left: auto;
+    margin-right: 10px;
 }
 
 #action_bar,
@@ -35,6 +37,28 @@ body {
 #action_bar_title,
 #action_bar_menu {
     min-height: 48px;
+    background-color: #fafafa;
+}
+
+#action_bar_more {
+    width: 56px;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin: 15px 0 15px 15px;
+    /*background-color: red;*/
+}
+
+#action_bar_more:before {
+    content: "";
+    background-image: url("../res/option_ic_more.svg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 100%;
+    height: 18px;
+    display: block;
 }
 
 #action_bar_back_button {
@@ -187,7 +211,7 @@ body {
 	margin-top: 20px;
 	margin-bottom:20px;
 	text-align: center;
-  	border=none;
+  	border:none;
 }
 
 .button {
@@ -200,12 +224,11 @@ body {
 }
 
 #power_icon_back_circle {
-	border-radius: 50%;
+  border-radius: 50%;
   background: #3695dd;
   width: 35px;
   height: 35px;
-  margin-top : 3px;
-  margin-right : 20px;
+  margin: 10px 20px 0 auto;
   display:flex;
   align-items: center;
 }
@@ -279,7 +302,7 @@ body {
 }
 .TOAHChildContainer {
 	display: inline-block;
-	width: 3.0rem;
+	width: 3.5rem;
 	height: auto;
 	vertical-align: top;
 }
@@ -312,7 +335,7 @@ body {
 	display: inline-block;
 	width: 0.05rem;
 	height: 2.325rem;
-	#border-right: solid 0.05rem rgba(0, 0, 0, 0.5);
+	/* #border-right: solid 0.05rem rgba(0, 0, 0, 0.5); */
 	margin-left: 1.225rem;
 	margin-right: 1.225rem;
 	margin-top: 0.1rem;
@@ -333,14 +356,16 @@ body {
   color: #252525;
 }
 
-.function_item{
+.function_container{
+  margin: 0 0 0 5%;
   padding: 10px;
-	#margin-top : 10px;
-	#margin-bottom : auto;
-	margin-left:5%;
-  height: 50px;
+  border-bottom: rgba(0,0,0,0.07) solid 1px;
+}
+
+.function_item{
+  height:75px;
   width:100%;
-  border-top: rgba(0,0,0,0.07) solid 1px;
+  color: white;
 }
 
 .item_icon {
@@ -367,6 +392,7 @@ body {
 	max-width: 12.4rem;
 	display:inline;
 }
+
 .function_item_multiline{
 	padding-top: 0.8rem;
 	margin-left: .8rem;;
@@ -381,6 +407,7 @@ body {
 	color: #252525;
   opacity:0.9;
 }
+
 .function_item_multiline_2{
 	margin: 0;
 	color: #3695dd;
@@ -390,13 +417,66 @@ body {
 }
 
 .filter_icon {
-	width: 100%;
 	text-align:center;
-	content: url("../res/ic_function_Filter_State.svg");
+}
+
+.filter_icon:before {
+  content: "";
+  background-image: url("../res/ic_function_Filter_State.svg");
+  background-size: contain;
+	width: 100%;
+  height: 100%;
+  display: block;
 }
 
 .energy_icon {
-	width: 100%;
 	text-align:center;
-	content: url("../res/ic_function_Energy_Consumption.svg");
+}
+
+.energy_icon:before {
+  content: "";
+  background-image: url("../res/ic_function_Energy_Consumption.svg");
+  background-size: contain;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.row-custom {
+  content: "";
+  clear: both;
+  display: block;
+  height: inherit;
+}
+
+.left-col {
+  float: left;
+  width: 100%;
+  background-color: #fafafa;
+}
+
+.right-col {
+  float: left;
+  width: 100%;
+}
+
+@media only screen and (orientation: landscape) and (min-height: 360px){
+  .left-col {
+    width: 50%;
+    height: inherit;
+  }
+
+  .right-col {
+    width: 50%;
+  }
+
+.function_container{
+  margin-left:0;
+}
+
+  @media only screen and (min-width: 768px) {
+    .left-col {
+      height: inherit;
+    }
+  }
 }

@@ -1,5 +1,8 @@
+<!DOCTYPE html>
 <html>
 	<head>
+		<title>Air Conditioner</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<!-- Stylesheet-->
 		<link rel="stylesheet" type="text/css" href="css/style.css" />
 
@@ -20,134 +23,151 @@
 	<body>
 		<!-- Action bar-->
 		<div id="action_bar">
-			<div id="action_bar_back_button" onclick="backAction()">
+			<span id="action_bar_back_button" onclick="backAction()">
 				<img src="res/board_ic_arrow_left.png" style="width: 100%; height:auto;" id="icon_back"/>
-			</div>
-		</div>
-
-		<!-- Hearder-->
-		<div id="Header_bar">
-			<div id="action_bar_title">
+			</span>
+			<span id="action_bar_title">
 				<div id="action_bar_title_sub" class="roboto-condensed-bold">HOME - LIVING ROOM</div>
 				<div id="action_bar_title_main" class="roboto-condensed-bold">AIR CONDITIONER</div>
-			</div>
-			<div id="power_icon_back_circle" onclick="onPowerBtnClicked()">
-				<img class="svg-class"src="res/ic_power.svg"></img>
-			</div>
+			</span>
+			<span id="action_bar_more">
+			</span>
 		</div>
 
-		<!-- airconditioner mode combo area-->
-		<div id="combo_area" align="center">
-			<select id="comboMode" class="mode_bar mode_bar_text roboto-condensed-bold" onchange="onSelectMode(this)">
-				<option value="Auto">Auto</option>
-				<option value="Cool">Cool</option>
-				<option value="CoolClean">CoolClean</option>
-				<option value="Dry">dry</option>
-				<option value="DryClean">DryClean</option>
-				<option value="FanOnly">FanOnly</option>
-				<option value="Heat">Heat</option>
-				<option value="HeatClean">HeatClean</option>
-				<option value="NotSupported">NotSupported</option>
-			</select>
+		<div class="row-custom">
+			<div class="left-col">
+
+				<!-- Header-->
+				<div id="header_bar">
+					<div id="power_icon_back_circle" class="svg-class" onclick="onPowerBtnClicked()">
+						<!--<img class="svg-class" src="res/ic_power.svg"></img>-->
+					</div>
+				</div>
+
+				<!-- airconditioner mode combo area-->
+				<div id="combo_area" align="center">
+					<select id="comboMode" class="mode_bar mode_bar_text roboto-condensed-bold" onchange="onSelectMode(this)">
+						<option value="Auto">Auto</option>
+						<option value="Cool">Cool</option>
+						<option value="CoolClean">CoolClean</option>
+						<option value="Dry">dry</option>
+						<option value="DryClean">DryClean</option>
+						<option value="FanOnly">FanOnly</option>
+						<option value="Heat">Heat</option>
+						<option value="HeatClean">HeatClean</option>
+						<option value="NotSupported">NotSupported</option>
+					</select>
+				</div>
+
+				<!-- cooling set point button area-->
+				<div class ="plus_minus_btn_bar roboto-condensed-regular">
+					<div class="coolsingset_container">
+						<div class="coolsingset_container_text">
+							<div class="coolingset_item_title roboto-regular">Set</div>
+							<div class="coolingset_item_title">
+								<span class="coolingset_item_content roboto-regular" id="coolingsetTemp" >24</span>
+								<span class="coolingset_item_unit roboto-regular" id="coolingsetUnit">°C</span>
+							</div>
+						</div>
+						<div class="coolsingset_container_btn">
+							<span class="coolingset_plus_minus plus_icon" onclick="onPlusBtnClicked()">
+									<!--<img class="plus_icon">-->
+							</span>
+							<span class="coolingset_plus_minus minus_icon" onclick="onMinusBtnClicked()">
+									<!--<img class="minus_icon">-->
+							</span>
+						</div>
+					</div>
+				</div>
+
+				<!-- status bar -->
+				<div class="status-container">
+					<div class="TOAHChildContainer">
+						<div class="status_item_title roboto-regular">Home</div>
+						<div class="TOAHChildDetail">
+							<span class="status_item_content roboto-medium" id="currentTemp">27</span>
+							<span class="status_item_unit roboto-regular" id="currentUnit">°C</span>
+						</div>
+					</div>
+
+					<div class="TOAHChildContainer">
+						<div class="status_item_title robotod-regular">Outdoor</div>
+						<div class="TOAHChildDetail">
+							<span class="status_item_content roboto-medium" id="outterTemp">31</span>
+							<span class="status_item_unit robotod-regular" id="outterUnit">°C</span>
+						</div>
+					</div>
+
+					<div class="TOAHChildContainer">
+						<div class="status_item_title robotod-regular">AirPurity</div>
+						<div class="TOAHChildDetail">
+							<span class="status_item_content roboto-medium" id="airpurity">Very poor</span>
+						</div>
+					</div>
+
+					<div class="TOAHChildContainer">
+						<div class="status_item_title robotod-regular">Humidity</div>
+						<div class="TOAHChildDetail">
+							<span class="status_item_content roboto-medium" id="humidity">50</span>
+							<span class="status_item_unit robotod-regular">%</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="right-col">
+
+				<!-- functional table -->
+				<div class="function_item">
+					<div class="function_container">
+						<div class="item_icon fan_icon">
+							<!--<img class ="fan_icon">-->
+						</div>
+						<div class="item_body1">
+							<div class="function_item_multiline">
+								<p class="function_item_multiline_1 roboto-condensed-regular">Fan speed</p>
+								<p class="function_item_multiline_2 roboto-condensed-regular" id="fanSpeed">Medium</p>
+							</div>
+						</div>
+						<div class="item_icon arrow_icon" id="fanSpeed_arrow" onclick="onSelectfanspeed(event)">
+							<!--<img class ="arrow_icon" id="fanSpeed_arrow" onclick="onSelectfanspeed()">-->
+							<div id="listbox" class="listbox-content">
+								<a href="#!" id="high" onclick="onSelectHigh()">High</a>
+								<a href="#!" id="medium" onclick="onSelectMedium()">Medium</a>
+								<a href="#!" id="low" onclick="onSelectLow()">Low</a>
+								<a href="#!" id="sleep" onclick="onSelectSleep()">Sleep</a>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="function_item">
+					<div class="function_container">
+						<div class="item_icon filter_icon">
+							<!--<img class ="filter_icon">-->
+						</div>
+						<div class="item_body2">
+							<div class="function_item_multiline">
+								<p class="function_item_multiline_1 roboto-condensed-regular">Filter state</p>
+								<p class="function_item_multiline_2 roboto-condensed-regular" id="filterState">Normal</p>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="function_item">
+					<div class="function_container">
+						<div class="item_icon energy_icon">
+							<!--<img class ="energy_icon">-->
+						</div>
+						<div class="item_body2">
+							<div class="function_item_multiline">
+								<p class="function_item_multiline_1 roboto-condensed-regular">Energy meter</p>
+								<p class="function_item_multiline_2 roboto-condensed-regular" id="energyMeter">20kwh</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
-
-		<!-- cooling set point button area-->
-			<div class ="plus_minus_btn_bar roboto-condensed-regular">
-				<div class="coolsingset_container">
-					<div class="coolsingset_container_text">
-						<div class="coolingset_item_title roboto-regular">Set</div>
-						<span class="coolingset_item_content roboto-regular" id="coolingsetTemp" >24</span>
-						<span class="coolingset_item_unit roboto-regular" id="coolingsetUnit">°C</span>
-					</div>
-					<div class="coolsingset_container_btn">
-						<span class="coolingset_plus_minus" onclick="onPlusBtnClicked()">
-							<img class="plus_icon">
-						</span>
-						<span class="coolingset_plus_minus" onclick="onMinusBtnClicked()">
-							<img class="minus_icon">
-						</span>
-					</div>
-				</div>
-			</div>
-
-		<!-- status bar -->
-		<div class="status-container">
-				<div class="TOAHChildContainer">
-					<div class="status_item_title roboto-regular">Home</div>
-					<div class="TOAHChildDetail">
-						<span class="status_item_content roboto-medium" id="currentTemp">27</span>
-						<span class="status_item_unit roboto-regular" id="currentUnit">°C</span>
-					</div>
-				</div>
-
-				<div class="TOAHChildContainer">
-					<div class="status_item_title robotod-regular">Outdoor</div>
-					<div class="TOAHChildDetail">
-						<span class="status_item_content roboto-medium" id="outterTemp">31</span>
-						<span class="status_item_unit robotod-regular" id="outterUnit">°C</span>
-					</div>
-				</div>
-
-				<div class="TOAHChildContainer">
-					<div class="status_item_title robotod-regular">AirPurity</div>
-					<div class="TOAHChildDetail">
-						<span class="status_item_content roboto-medium" id="airpurity">Very poor</span>
-					</div>
-				</div>
-
-				<div class="TOAHChildContainer">
-					<div class="status_item_title robotod-regular">Humidity</div>
-					<div class="TOAHChildDetail">
-						<span class="status_item_content roboto-medium" id="humidity">50</span>
-						<span class="status_item_unit robotod-regular">%</span>
-					</div>
-				</div>
-			</div>
-
-			<!-- functional table -->
-			<div class="function_item">
-				<div class="item_icon">
-						<img class ="fan_icon">
-				</div>
-				<div class="item_body1">
-					<div class="function_item_multiline">
-						<p class="function_item_multiline_1 roboto-condensed-regular">Fan speed</p>
-						<p class="function_item_multiline_2 roboto-condensed-regular" id="fanSpeed">Medium</p>
-					</div>
-				</div>
-				<div class="item_icon">
-					<img class ="arrow_icon" id="fanSpeed_arrow" onclick="onSelectfanspeed()">
-					<div id="listbox" class="listbox-content" onmouseout="closeListBox(this)">
-				    <a id="high" onclick="onSelectHigh()">High</a>
-				    <a id="medium" onclick="onSelectMedium()">Medium</a>
-				    <a id="low" onclick="onSelectLow()">Low</a>
-						<a id="sleep" onclick="onSelectSleep()">Sleep</a>
-				  </div>
-				</div>
-			</div>
-
-			<div class="function_item">
-				<div class="item_icon">
-						<img class ="filter_icon">
-				</div>
-				<div class="item_body2">
-					<div class="function_item_multiline">
-						<p class="function_item_multiline_1 roboto-condensed-regular">Filter state</p>
-						<p class="function_item_multiline_2 roboto-condensed-regular" id="filterState">Normal</p>
-					</div>
-				</div>
-			</div>
-
-			<div class="function_item">
-				<div class="item_icon">
-						<img class ="energy_icon">
-				</div>
-				<div class="item_body2">
-					<div class="function_item_multiline">
-						<p class="function_item_multiline_1 roboto-condensed-regular">Energy meter</p>
-						<p class="function_item_multiline_2 roboto-condensed-regular" id="energyMeter">20kwh</p>
-					</div>
-				</div>
-			</div>
 	</body>
 </html>

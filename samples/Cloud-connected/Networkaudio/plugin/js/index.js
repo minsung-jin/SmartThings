@@ -25,6 +25,18 @@ window.onload = function () {
 
 	inlineStyle = document.createElement('style');
 	document.body.appendChild(inlineStyle);
+	
+	const _R = document.querySelector('[type=range]');
+
+	document.documentElement.classList.add('js');
+
+	_R.addEventListener('input', function(e) {
+		_R.style.setProperty('--val', +_R.value);
+	}, false);
+
+	document.body.addEventListener('click', function() {
+		closeListBox();
+	})
 };
 
 function init() {
@@ -107,33 +119,40 @@ function InputVolume(rangeId, rangeValue) {
 	capabilityAudioVolume.setVolume(parseInt(rangeValue));
 }
 
-function onSelectRepeate() {
+function onSelectRepeate(event) {
 	document.getElementById("repeat_listbox").classList.toggle("show", true);
+	event.stopPropagation();
 }
 
-function closeListBox(event) {
-	var x1 = event.offsetLeft;
-	var y1 = event.offsetTop;
-	var x2 = event.offsetWidth;
-	var y2 = event.offsetHeight;
-	var x = event.onmouseout.arguments["0"].clientX;
-	var y = event.onmouseout.arguments["0"].clientY;
-	if(x < x1 || x > x1+x2)
-		document.getElementById("repeat_listbox").classList.toggle("show", false);
-	else if(y < y1 || y > y1+y2)
-		document.getElementById("repeat_listbox").classList.toggle("show", false);
+function closeListBox() {
+	if (document.getElementById("repeat_listbox").classList.contains('show')) {
+		capabilityMediaPlaybackRepeat.closeListbox();
+	}
+	// var x1 = event.offsetLeft;
+	// var y1 = event.offsetTop;
+	// var x2 = event.offsetWidth;
+	// var y2 = event.offsetHeight;
+	// var x = event.onmouseout.arguments["0"].clientX;
+	// var y = event.onmouseout.arguments["0"].clientY;
+	// if(x < x1 || x > x1+x2)
+	// 	document.getElementById("repeat_listbox").classList.toggle("show", false);
+	// else if(y < y1 || y > y1+y2)
+	// 	document.getElementById("repeat_listbox").classList.toggle("show", false);
 }
 
 function onSelectOff() {
 	capabilityMediaPlaybackRepeat.set("off");
+	event.stopPropagation();
 }
 
 function onSelectOne() {
 	capabilityMediaPlaybackRepeat.set("one");
+	event.stopPropagation();
 }
 
 function onSelectAll() {
 	capabilityMediaPlaybackRepeat.set("all");
+	event.stopPropagation();
 }
 
 function onClickShuffle(suffleMode) {
