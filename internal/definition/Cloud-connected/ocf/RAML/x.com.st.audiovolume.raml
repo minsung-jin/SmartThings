@@ -116,7 +116,8 @@ traits:
                 "rt": ["x.com.st.audiovolume"],
                 "id": "unique_example_id",
                 "volume": 20,
-                "mute": false
+                "mute": false,
+		"command": ""
               }
 
   post:
@@ -127,7 +128,8 @@ traits:
           {
             "id": "unique_example_id",
             "volume": 75,
-            "mute": false
+            "mute": false,
+	    "command": ""
           }
     responses:
       200:
@@ -138,5 +140,6 @@ traits:
               {
                 "id": "unique_example_id",
                 "volume": 75,
-                "mute": false
+                "mute": false,
+		"command": ""
               }
