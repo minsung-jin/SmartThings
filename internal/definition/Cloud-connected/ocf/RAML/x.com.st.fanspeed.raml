@@ -24,19 +24,6 @@ schemas:
             "fanSpeed": {
               "type": "integer",
               "description": "Current fanSpeed"
-            },
-            "range": {
-              "type": "array",
-              "description": "Array defining min,max values for this fanSpeed on this device",
-              "items": {
-                "type": "integer"
-              },
-              "readOnly": true
-            },
-            "step": {
-              "type": "integer",
-              "description": "Step of fan speed",
-              "readOnly": true
             }
           }
         }
@@ -46,7 +33,7 @@ schemas:
       {"$ref": "oic.baseResource.json#/definitions/oic.r.baseresource"},
       {"$ref": "#/definitions/x.com.st.fanspeed"}
     ],
-    "required": ["fanSpeed", "range", "step"]
+    "required": ["fanSpeed"]
     }
 - FanSpeedUpdate: |
     {
@@ -97,9 +84,7 @@ traits:
               {
                 "rt": ["x.com.st.fanspeed"],
                 "id": "unique_example_id",
-                "fanSpeed":  20,
-                "range":        [0,100],
-                "step" : 10
+                "fanSpeed":  2
               }
 
   post:
@@ -111,7 +96,7 @@ traits:
         example: |
           {
             "id":    "unique_example_id",
-            "fanSpeed":  20
+            "fanSpeed":  3
           }
     responses:
       200:
@@ -121,5 +106,5 @@ traits:
             example: |
               {
                 "id":    "unique_example_id",
-                "fanSpeed":  20
+                "fanSpeed":  3
               }

@@ -1,6 +1,6 @@
 #%RAML 0.8
-title: WWST Dust sensor level
-version: v1.0.0-20170911
+title: WWST Panic alarm
+version: v1.0.0-20180504
 documentation:
   - title: Copyright (c) 2018 Samsung Electronics Co., Ltd. All rights reserved.
   	       Copyright (c) 2016 Open Connectivity Foundation, Inc. All rights reserved.
@@ -11,33 +11,33 @@ documentation:
 
 	      THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE OR WARRANTIES OF NON-INFRINGEMENT, ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
 schemas:
-- DustLevel: |
+- Panicalarm: |
     {
-      "id": "http://openinterconnect.org/iotdatamodels/schemas/x.com.st.dustlevel.json#",
+      "id": "http://openinterconnect.org/iotdatamodels/schemas/x.com.st.panicalarm.json#",
       "$schema": "http://json-schema.org/draft-04/schema#",
       "description" : "Copyright (c) 2016, 2017 Open Connectivity Foundation, Inc. All rights reserved.",
-      "title": "Air Quality Sensor Level",
+      "title": "Panic alarm",
       "definitions": {
-    "x.com.st.dustlevel": {
-      "type": "object",
-      "properties": {
-        "fineDustLevel": {
-          "type": "number",
-          "description": "A value representation of PM 2.5, micrograms per cubic meter"
-        },
-        "dustLevel": {
-          "type": "number",
-          "description": "A value representation of PM 10, micrograms per cubic meter"
-        }
-      }
-    }
+		    "x.com.st.panicalarm": {
+		      "type": "object",
+		      "properties": {
+            "panicAlarm": {
+		          "type": "string",
+		          "enum": [
+		            "panic",
+		            "clear"
+		          ],
+		          "description": "State of the panic alarm."
+		        },
+		      }
+		    }
       },
       "type": "object",
       "allOf": [
     {"$ref": "oic.baseResource.json#/definitions/oic.r.baseresource"},
-    {"$ref": "#/definitions/x.com.st.dustlevel"}
+    {"$ref": "#/definitions/x.com.st.panicalarm"}
       ],
-      "required": []
+      "required": ["panicAlarm"]
     }
 
 traits:
@@ -46,24 +46,23 @@ traits:
         if:
           enum: ["oic.if.s","oic.if.baseline"]
 
-/WWSTDustsensorlevelesURI:
+/WWSTPanicalarmResURI:
   description: |
-        Dust sensor level
-  displayName: WWST Dust sensor level
+        Panic alarm
+  displayName: WWST panic alarm
   is: [ interface ]
 
   get:
     description: |
-      Retrieves the current Dust sensor level
+      Retrieves the state of the panic alarm
     responses:
       200:
         body:
           application/json:
-            schema: DustLevel
+            schema: Panicalarm
             example: |
               {
-                "rt":             ["x.com.st.dustlevel"],
+                "rt":             ["x.com.st.panicalarm"],
                 "id":             "unique_example_id",
-                "fineDustLevel" : 10,
-                "dustLevel" : 10
+                "panicAlarm" : "panic"
               }
