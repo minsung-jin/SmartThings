@@ -25,14 +25,6 @@ window.onload = function () {
 
 	inlineStyle = document.createElement('style');
 	document.body.appendChild(inlineStyle);
-
-	const _R = document.querySelector('[type=range]');
-
-	document.documentElement.classList.add('js');
-
-	_R.addEventListener('input', function(e) {
-		_R.style.setProperty('--val', +_R.value);
-	}, false);
 };
 
 function init() {
@@ -79,5 +71,32 @@ function onPowerBtnClicked() {
 }
 
 function InputDimmer(rangeId, rangeValue) {
-		capabilitySwitchLevel.set(parseInt(rangeValue));
+	capabilitySwitchLevel.set(parseInt(rangeValue));
+}
+
+// Dropdowns
+
+function getAll(selector) {
+	return Array.prototype.slice.call(document.querySelectorAll(selector), 0);
+}
+
+var $dropdowns = getAll('.dropdown:not(.is-hoverable)');
+
+if ($dropdowns.length > 0) {
+	$dropdowns.forEach(function ($el) {
+		$el.addEventListener('click', function (event) {
+			event.stopPropagation();
+			$el.classList.toggle('is-active');
+		});
+	});
+
+	document.addEventListener('click', function (event) {
+		closeDropdowns();
+	});
+}
+
+function closeDropdowns() {
+	$dropdowns.forEach(function ($el) {
+		$el.classList.remove('is-active');
+	});
 }

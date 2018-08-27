@@ -26,6 +26,7 @@ var capabilityDustSensor = {
 		scplugin.log.debug(className, arguments.callee.name, uri);
 
 		if (result == "OCF_OK" || result == "OCF_RESOURCE_CHANGED" || result == "OCF_RES_ALREADY_SUBSCRIBED") {
+			if(rcsJsonString["dustLevel"] === undefined) return;
 			if (rcsJsonString["dustLevel"] <= 25)
 				document.getElementById("dustLevel").innerHTML = "Good";
 			else if (rcsJsonString["dustLevel"] <= 50)

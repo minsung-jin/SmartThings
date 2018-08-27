@@ -16,7 +16,6 @@
 
 var capabilityAirQualitySensor = {
 	'href' : "/capability/airQualitySensor/main/0",
-	'range' : [0, 100],
 
 	'update' : function() {
 		ocfDevice.getRemoteRepresentation(this.href, this.onRepresentCallback);
@@ -27,13 +26,11 @@ var capabilityAirQualitySensor = {
 		scplugin.log.debug(className, arguments.callee.name, uri);
 
 		if (result == "OCF_OK" || result == "OCF_RESOURCE_CHANGED" || result == "OCF_RES_ALREADY_SUBSCRIBED") {
-			capabilityAirQualitySensor.range = rcsJsonString["range"];
-			var temp = parseInt((capabilityAirQualitySensor.range[1] - capabilityAirQualitySensor.range[0]) / 4);
-			if (rcsJsonString["airQuality"] <= capabilityAirQualitySensor.range[0] + temp * 1)
+			if (rcsJsonString["airQuality"] <= 25)
 				document.getElementById("airpurity").innerHTML = "Very poor";
-			else if (rcsJsonString["airQuality"] <= capabilityAirQualitySensor.range[0] + temp * 2)
+			else if (rcsJsonString["airQuality"] <= 50)
 				document.getElementById("airpurity").innerHTML = "Poor";
-			else if (rcsJsonString["airQuality"] <= capabilityAirQualitySensor.range[0] + temp * 3)
+			else if (rcsJsonString["airQuality"] <= 75)
 				document.getElementById("airpurity").innerHTML = "Normal";
 			else
 				document.getElementById("airpurity").innerHTML = "Good";

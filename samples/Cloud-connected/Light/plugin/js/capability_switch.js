@@ -34,7 +34,7 @@ var capabilitySwitch = {
 				image.style.background="#3695dd";
 		    image.style.opacity="1";
 			} else {
-				image.style.background="#252525";
+				image.style.background="#3695dd";
 		    image.style.opacity="0.2";
 			}
 		}

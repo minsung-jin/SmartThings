@@ -25,23 +25,75 @@ window.onload = function () {
 
 	inlineStyle = document.createElement('style');
 	document.body.appendChild(inlineStyle);
-	
-	const _R = document.querySelector('[type=range]');
-
-	document.documentElement.classList.add('js');
-
-	_R.addEventListener('input', function(e) {
-		_R.style.setProperty('--val', +_R.value);
-	}, false);
-
-	document.body.addEventListener('click', function() {
-		closeListBox();
-	})
 };
 
 function init() {
 	console.log("-----------init-----------");
 	scplugin.manager.getOCFDevices(getOCFDeviceCB);
+
+	document.getElementById("buttonMode").addEventListener("click", function(){
+		var modalData = '<div class="box">'
+		modalData += '<div class="has-text-weight-bold">MODE</div>';
+		var modes = ["AM", "CD", "FM", "HDMI", "HDMI2", "USB", "YouTube", "aux", "bluetooth", "digital", "melon", "wifi"];
+		var btnMode = document.getElementById('valueMode')
+
+		var arrayLength = modes.length;
+		for (var i = 0; i < arrayLength; i++) {
+			modalData += '<div class="margin-top-s margin-bottom-s'
+			if (btnMode.innerHTML === modes[i])
+				modalData += ' has-text-link"';
+			else
+				modalData += '"';
+
+			modalData += 'onclick="onSelectMode(\'' + modes[i] + '\')">' + modes[i] + '</div>'
+		}
+
+		modalData += '<div onClick="closeBottomSheet()" class="has-text-right has-text-weight-bold has-text-link">Cancel</div>';
+		modalData += '<div id="bottomSheetLoading" class="modal" style="position: absolute;"><div class="modal-background" style="background-color: rgba(255,255,255,0.6);"></div><div class="loader modal-content"></div></div>'
+		modalData += '</div>'
+		document.getElementById("bottomSheetContent").innerHTML = modalData
+		document.getElementById("bottomSheetBody").classList.add('is-active')
+	});
+
+	document.getElementById("buttonRepeat").addEventListener("click", function(){
+		var modalData = '<div class="box">'
+		modalData += '<div class="has-text-weight-bold">REPEAT</div>';
+		var modes = ["All", "One", "Off"];
+		var btnMode = document.getElementById('repeat')
+
+		var arrayLength = modes.length;
+		for (var i = 0; i < arrayLength; i++) {
+			modalData += '<div class="margin-top-s margin-bottom-s'
+			if (btnMode.innerHTML === modes[i])
+				modalData += ' has-text-link"';
+			else
+				modalData += '"';
+
+			modalData += 'onclick="onSelectRepeat(\'' + modes[i] + '\')">' + modes[i] + '</div>'
+		}
+
+		modalData += '<div onClick="closeBottomSheet()" class="has-text-right has-text-weight-bold has-text-link">Cancel</div>';
+		modalData += '<div id="bottomSheetLoading" class="modal" style="position: absolute;"><div class="modal-background" style="background-color: rgba(255,255,255,0.6);"></div><div class="loader modal-content"></div></div>'
+		modalData += '</div>'
+		document.getElementById("bottomSheetContent").innerHTML = modalData
+		document.getElementById("bottomSheetBody").classList.add('is-active')
+	});
+
+}
+
+function showLoading()
+{
+	document.getElementById("bottomSheetLoading").classList.add('is-active')
+}
+
+function hideLoading()
+{
+	document.getElementById("bottomSheetLoading").classList.remove('is-active')
+}
+
+function closeBottomSheet()
+{
+	document.getElementById("bottomSheetBody").classList.remove('is-active')
 }
 
 function getOCFDeviceCB(devices) {
@@ -64,6 +116,11 @@ function onRepresentCallback(result, deviceHandle, uri, rcsJsonString) {
 	for (var i = 0; i < capabilities.length; i++) {
 		if ( capabilities[i].href == uri) {
 			capabilities[i].onRepresentCallback(result, deviceHandle, uri, rcsJsonString);
+			if (capabilities[i] === capabilityMediaInputSource || capabilities[i] === capabilityMediaPlaybackRepeat)
+			{
+				hideLoading()
+				closeBottomSheet()
+			}
 		}
 	}
 }
@@ -78,94 +135,74 @@ function backAction() {
 }
 
 function onPowerBtnClicked() {
-	if (document.getElementById("repeat_listbox").classList.contains('show'))
-		document.getElementById("repeat_listbox").classList.toggle("show", false);
 	capabilitySwitch.powerToggle();
 }
 
 function onSelectSource(selectedItem) {
-	if (document.getElementById("repeat_listbox").classList.contains('show'))
-		document.getElementById("repeat_listbox").classList.toggle("show", false);
-  capabilityMediaInputSource.set(selectedItem.value);
+    capabilityMediaInputSource.set(selectedItem.value);
 }
 
 function onPrevClicked() {
-	if (document.getElementById("repeat_listbox").classList.contains('show'))
-		document.getElementById("repeat_listbox").classList.toggle("show", false);
 	capabilityMediaTrackControl.set("previous");
 }
 
 function onPlayClicked() {
-	if (document.getElementById("repeat_listbox").classList.contains('show'))
-		document.getElementById("repeat_listbox").classList.toggle("show");
 	capabilityMediaPlayback.toggle();
 }
 
 function onNextClicked() {
-	if (document.getElementById("repeat_listbox").classList.contains('show'))
-		document.getElementById("repeat_listbox").classList.toggle("show", false);
 	capabilityMediaTrackControl.set("next");
 }
 
-function onVolumeClicked() {
-	if (document.getElementById("repeat_listbox").classList.contains('show'))
-		document.getElementById("repeat_listbox").classList.toggle("show", false);
-	capabilityAudioVolume.muteToggle();
-}
-
 function InputVolume(rangeId, rangeValue) {
-	if (document.getElementById("repeat_listbox").classList.contains('show'))
-		document.getElementById("repeat_listbox").classList.toggle("show", false);
 	capabilityAudioVolume.setVolume(parseInt(rangeValue));
 }
 
-function onSelectRepeate(event) {
-	document.getElementById("repeat_listbox").classList.toggle("show", true);
-	event.stopPropagation();
-}
-
-function closeListBox() {
-	if (document.getElementById("repeat_listbox").classList.contains('show')) {
-		capabilityMediaPlaybackRepeat.closeListbox();
-	}
-	// var x1 = event.offsetLeft;
-	// var y1 = event.offsetTop;
-	// var x2 = event.offsetWidth;
-	// var y2 = event.offsetHeight;
-	// var x = event.onmouseout.arguments["0"].clientX;
-	// var y = event.onmouseout.arguments["0"].clientY;
-	// if(x < x1 || x > x1+x2)
-	// 	document.getElementById("repeat_listbox").classList.toggle("show", false);
-	// else if(y < y1 || y > y1+y2)
-	// 	document.getElementById("repeat_listbox").classList.toggle("show", false);
-}
-
-function onSelectOff() {
-	capabilityMediaPlaybackRepeat.set("off");
-	event.stopPropagation();
-}
-
-function onSelectOne() {
-	capabilityMediaPlaybackRepeat.set("one");
-	event.stopPropagation();
-}
-
-function onSelectAll() {
-	capabilityMediaPlaybackRepeat.set("all");
-	event.stopPropagation();
+function onSelectRepeat(selectedRepeat)
+{
+	showLoading();
+	capabilityMediaPlaybackRepeat.set(selectedRepeat.toLowerCase());
 }
 
 function onClickShuffle(suffleMode) {
-	if (document.getElementById("repeat_listbox").classList.contains('show'))
-		document.getElementById("repeat_listbox").classList.toggle("show", false);
 	if(suffleMode.checked == true) {
 		capabilityMediaPlaybackShuffle.set("enabled");
 		suffleMode.checked = false;
 	}
 	else {
-		if (document.getElementById("repeat_listbox").classList.contains('show'))
-			document.getElementById("repeat_listbox").classList.toggle("show", false);
 		capabilityMediaPlaybackShuffle.set("disabled");
 		suffleMode.checked = true;
 	}
+}
+
+function onSelectMode(selectedMode) {
+	showLoading();
+	capabilityMediaInputSource.set(selectedMode);
+}
+
+// Dropdowns
+
+function getAll(selector) {
+	return Array.prototype.slice.call(document.querySelectorAll(selector), 0);
+}
+
+var $dropdowns = getAll('.dropdown:not(.is-hoverable)');
+
+if ($dropdowns.length > 0) {
+	$dropdowns.forEach(function ($el) {
+		$el.addEventListener('click', function (event) {
+			event.stopPropagation();
+			$el.classList.toggle('is-active');
+		});
+	});
+
+	document.addEventListener('click', function (event) {
+		closeDropdowns();
+	});
+}
+
+function closeDropdowns() {
+	$dropdowns.forEach(function ($el) {
+		$el.classList.remove('is-active');
+	});
 }

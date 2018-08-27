@@ -27,6 +27,7 @@ var capabilityMediaPlaybackRepeat = {
 		scplugin.log.debug(className, arguments.callee.name, uri);
 
 		if (result == "OCF_OK" || result == "OCF_RESOURCE_CHANGED" || result == "OCF_RES_ALREADY_SUBSCRIBED") {
+			if(rcsJsonString["modes"] === undefined) return;
 			capabilityMediaPlaybackRepeat.value = rcsJsonString["modes"];
 			if(capabilityMediaPlaybackRepeat.value == "off") {
 				document.getElementById("repeat").style.color = "#252525";
@@ -52,17 +53,5 @@ var capabilityMediaPlaybackRepeat = {
 		var setRcsJson = {};
 		setRcsJson["modes"] = repeat;
 		ocfDevice.setRemoteRepresentation(this.href, setRcsJson, this.onRepresentCallback);
-		this.closeListbox();
-	},
-
-		'closeListbox' : function() {
-			var list = document.getElementsByClassName("repeat-listbox-content");
-			var i;
-			for (i = 0; i < list.length; i++) {
-				var openList = list[i];
-				if (openList.classList.contains('show')) {
-					openList.classList.remove('show');
-				}
-			}
 	}
 }

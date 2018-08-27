@@ -21,15 +21,74 @@ var capabilities = [capabilitySwitch, capabilityAirConditionerMode, capabilityTh
 window.onload = function () {
 	console.log("version : 0.0.1");
 	init();
-
-	document.body.addEventListener('click', function () {
-		closeListBox();
-	})
 };
 
 function init() {
 	console.log("-----------init-----------");
 	scplugin.manager.getOCFDevices(getOCFDeviceCB);
+
+	document.getElementById("buttonMode").addEventListener("click", function(){
+		var modalData = '<div class="box">'
+		modalData += '<div class="has-text-weight-bold">MODE</div>';
+		var modes = ["Auto", "Cool", "CoolClean", "Dry", "DryClean", "FanOnly", "Heat", "HeatClean", "NotSupported"];
+		var btnMode = document.getElementById('valueMode')
+
+		var arrayLength = modes.length;
+		for (var i = 0; i < arrayLength; i++) {
+			modalData += '<div class="margin-top-s margin-bottom-s'
+			if (btnMode.innerHTML === modes[i])
+				modalData += ' has-text-link"';
+			else
+				modalData += '"';
+
+			modalData += 'onclick="onSelectMode(\'' + modes[i] + '\')">' + modes[i] + '</div>'
+		}
+
+		modalData += '<div onClick="closeBottomSheet()" class="has-text-right has-text-weight-bold has-text-link">Cancel</div>';
+		modalData += '<div id="bottomSheetLoading" class="modal" style="position: absolute;"><div class="modal-background" style="background-color: rgba(255,255,255,0.6);"></div><div class="loader modal-content"></div></div>'
+		modalData += '</div>'
+		document.getElementById("bottomSheetContent").innerHTML = modalData
+		document.getElementById("bottomSheetBody").classList.add('is-active')
+	});
+
+	document.getElementById("buttonFanSpeed").addEventListener("click", function(){
+		var modalData = '<div class="box">'
+		modalData += '<div class="has-text-weight-bold">Fan Speed</div>';
+		var fanSpeed = ["High", "Medium", "Low", "Sleep"];
+		var currentFanSpeed = document.getElementById('fanSpeed')
+
+		var arrayLength = fanSpeed.length;
+		for (var i = 0; i < arrayLength; i++) {
+			modalData += '<div class="margin-top-s margin-bottom-s'
+			if (currentFanSpeed.innerHTML === fanSpeed[i])
+				modalData += ' has-text-link"';
+			else
+				modalData += '"';
+
+			modalData += 'onclick="onSelectFanSpeed(\'' + fanSpeed[i] + '\')">' + fanSpeed[i] + '</div>'
+		}
+
+		modalData += '<div onClick="closeBottomSheet()" class="has-text-right has-text-weight-bold has-text-link">Cancel</div>';
+		modalData += '<div id="bottomSheetLoading" class="modal" style="position: absolute;"><div class="modal-background" style="background-color: rgba(255,255,255,0.6);"></div><div class="loader modal-content"></div></div>'
+		modalData += '</div>'
+		document.getElementById("bottomSheetContent").innerHTML = modalData
+		document.getElementById("bottomSheetBody").classList.add('is-active')
+	});
+}
+
+function showLoading()
+{
+	document.getElementById("bottomSheetLoading").classList.add('is-active')
+}
+
+function hideLoading()
+{
+	document.getElementById("bottomSheetLoading").classList.remove('is-active')
+}
+
+function closeBottomSheet()
+{
+	document.getElementById("bottomSheetBody").classList.remove('is-active')
 }
 
 function getOCFDeviceCB(devices) {
@@ -53,7 +112,12 @@ function getOCFDeviceCB(devices) {
 function onRepresentCallback(result, deviceHandle, uri, rcsJsonString) {
     for (var i = 0; i < capabilities.length; i++) {
         if ( capabilities[i].href == uri) {
-            capabilities[i].onRepresentCallback(result, deviceHandle, uri, rcsJsonString);
+			capabilities[i].onRepresentCallback(result, deviceHandle, uri, rcsJsonString);
+			if (capabilities[i] === capabilityAirConditionerMode || capabilities[i] === capabilityFanspeed)
+			{
+				hideLoading()
+				closeBottomSheet()
+			}
         }
     }
 }
@@ -71,8 +135,9 @@ function onPowerBtnClicked() {
 	capabilitySwitch.powerToggle();
 }
 
-function onSelectMode(selectedItem) {
-    capabilityAirConditionerMode.set(selectedItem.value);
+function onSelectMode(selectedMode) {
+	showLoading();
+	capabilityAirConditionerMode.set(selectedMode);
 }
 
 function onPlusBtnClicked() {
@@ -83,42 +148,34 @@ function onMinusBtnClicked() {
 	capabilityThermostatCoolingSetpoint.decrease();
 }
 
-function onSelectfanspeed(event) {
-	document.getElementById("listbox").classList.toggle("show");
-	event.stopPropagation();
+function onSelectFanSpeed(fanSpeed) {
+	showLoading();
+	capabilityFanspeed.set(fanSpeed);
 }
 
-function closeListBox(event) {
-	// var x1 = event.offsetLeft;
-	// var y1 = event.offsetTop;
-	// var x2 = event.offsetWidth;
-	// var y2 = event.offsetHeight;
-	// var x = event.onmouseout.arguments["0"].clientX;
-	// var y = event.onmouseout.arguments["0"].clientY;
-	// if(x < x1 || x > x1+x2)
-	// 	capabilityFanspeed.closeListbox();
-	// else if(y < y1 || y > y1+y2)
-	if (document.getElementById("listbox").classList.contains('show')) {
-		capabilityFanspeed.closeListbox();
-	}
+// Dropdowns
+
+function getAll(selector) {
+	return Array.prototype.slice.call(document.querySelectorAll(selector), 0);
 }
 
-function onSelectHigh() {
-	capabilityFanspeed.set("high");
-	event.stopPropagation();
+var $dropdowns = getAll('.dropdown:not(.is-hoverable)');
+
+if ($dropdowns.length > 0) {
+	$dropdowns.forEach(function ($el) {
+		$el.addEventListener('click', function (event) {
+			event.stopPropagation();
+			$el.classList.toggle('is-active');
+		});
+	});
+
+	document.addEventListener('click', function (event) {
+		closeDropdowns();
+	});
 }
 
-function onSelectMedium() {
-	capabilityFanspeed.set("medium");
-	event.stopPropagation();
-}
-
-function onSelectLow() {
-	capabilityFanspeed.set("low");
-	event.stopPropagation();
-}
-
-function onSelectSleep() {
-	capabilityFanspeed.set("sleep");
-	event.stopPropagation();
+function closeDropdowns() {
+	$dropdowns.forEach(function ($el) {
+		$el.classList.remove('is-active');
+	});
 }

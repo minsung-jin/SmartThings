@@ -1,24 +1,14 @@
-@charset "utf-8";
+@CHARSET "UTF-8";
 @import url("fonts.css");
-
-@media only screen and (min-height: 600px) {
-  html {
-    min-width: 100%;
-    min-height: 100%;
-    width: 100%;
-    height: 100%;
-  }
-}
-
 body {
-    /* position: fixed; */
+    position: fixed;
     width:100%;
     height:100%;
     top: 0px;
     bottom: 0px;
     left: 0px;
     right: 0px;
-    background-color: white;
+    background-color: #fafafa;
     margin: 0;
     padding: 0;
     display:flex;
@@ -33,31 +23,9 @@ body {
 #action_bar {
     border-bottom: rgba(0,0,0,0.07) solid 1px;
     display:flex;
-    background-color: #fafafa;
 }
 
-#action_bar_more {
-    width: 56px;
-    display:flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    margin: 15px 0 15px 15px;
-    /*background-color: red;*/
-}
-
-#action_bar_more:before {
-  content: "";
-  background-image: url("../res/option_ic_more.svg");
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  width: 100%;
-  height: 18px;
-  display: block;
-}
-
-#header_bar {
+#Header_bar {
     min-height: 50px;
     display:flex;
 }
@@ -208,7 +176,7 @@ body {
 	margin-top: 20px;
 	margin-bottom:20px;
 	text-align: center;
-  	border:none;
+  	border=none;
 }
 
 .button {
@@ -221,11 +189,12 @@ body {
 }
 
 #power_icon_back_circle {
-  border-radius: 50%;
+	border-radius: 50%;
   background: #3695dd;
   width: 35px;
   height: 35px;
-  margin: 10px 20px 0 auto;
+  margin-top : 3px;
+  margin-right : 20px;
   display:flex;
   align-items: center;
 }
@@ -306,7 +275,6 @@ body {
   opacity:0.8;
   margin: 0;
   padding-top: 40px;
-  text-align: center;
 }
 
 .status_text_ready2 {
@@ -316,7 +284,6 @@ body {
   opacity:0.8;
   margin: 0;
   padding: 5px;
-  text-align: center;
 }
 
 .status_text_run1 {
@@ -347,16 +314,12 @@ body {
   height: 75px;
 }
 
-.function_container{
-  margin: 0 0 0 5%;
-  padding: 10px;
-  border-bottom: rgba(0,0,0,0.07) solid 1px;
-}
-
 .function_item{
-  height:75px;
+  padding: 10px;
+	margin-left:5%;
+  height: 50px;
   width:100%;
-  color: white;
+  border-top: rgba(0,0,0,0.07) solid 1px;
 }
 
 .item_icon {
@@ -383,7 +346,6 @@ body {
 	max-width: 12.4rem;
 	display:inline;
 }
-
 .function_item_multiline{
 	padding-top: 0.8rem;
 	margin-left: .8rem;;
@@ -398,7 +360,6 @@ body {
 	color: #252525;
   opacity:0.9;
 }
-
 .function_item_multiline_2{
 	margin: 0;
 	color: #3695dd;
@@ -414,53 +375,7 @@ body {
 }
 
 .energy_icon {
+	width: 100%;
 	text-align:center;
+	content: url("../res/ic_function_Energy_Consumption.svg");
 }
-
-.energy_icon:before {
-  content: "";
-  background-image: url("../res/ic_function_Energy_Consumption.svg");
-  background-size: contain;
-  width: 100%;
-  height: 100%;
-  display: block;
-}
-
-.row-custom {
-  content: "";
-  clear: both;
-  display: block;
-  height: inherit;
-}
-
-.left-col {
-  float: left;
-  width: 100%;
-  background-color: #fafafa;
-}
-
-.right-col {
-  float: left;
-  width: 100%;
-}
-
-@media only screen and (orientation: landscape) and (min-height: 360px){
-  .left-col {
-    width: 50%;
-    height: inherit;
-  }
-
-  .right-col {
-    width: 50%;
-  }
-  
-  .function_container{
-    margin-left: 0;
-  }
-
-  @media only screen and (min-width: 768px) {
-    .left-col {
-      height: inherit;
-    }
-  }
-} 

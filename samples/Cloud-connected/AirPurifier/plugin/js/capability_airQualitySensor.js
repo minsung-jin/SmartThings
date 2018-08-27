@@ -16,7 +16,6 @@
 
 var capabilityAirQualitySensor = {
 	'href' : "/capability/airQualitySensor/main/0",
-	'range' : [0, 100],
 
 	'update' : function() {
 		ocfDevice.getRemoteRepresentation(this.href, this.onRepresentCallback);
@@ -27,21 +26,18 @@ var capabilityAirQualitySensor = {
 		scplugin.log.debug(className, arguments.callee.name, uri);
 
 		if (result == "OCF_OK" || result == "OCF_RESOURCE_CHANGED" || result == "OCF_RES_ALREADY_SUBSCRIBED") {
-			capabilityAirQualitySensor.range = rcsJsonString["range"];
-			var temp = parseInt((capabilityAirQualitySensor.range[1] - capabilityAirQualitySensor.range[0]) / 4);
-			if (rcsJsonString["airQuality"] <= capabilityAirQualitySensor.range[0] + temp * 1) {
-				document.getElementById("svg-status-id").src = "res/air_purifier_mode_circle_04.svg";
-				document.getElementById("air_quality_area_text").innerHTML = "Very poor";
-			} else if (rcsJsonString["airQuality"] <= capabilityAirQualitySensor.range[0] + temp * 2) {
-				document.getElementById("svg-status-id").src = "res/air_purifier_mode_circle_03.svg";
-				document.getElementById("air_quality_area_text").innerHTML = "Poor";
-			} else if (rcsJsonString["airQuality"] <= capabilityAirQualitySensor.range[0] + temp * 3) {
-				document.getElementById("svg-status-id").src = "res/air_purifier_mode_circle_02.svg";
-				document.getElementById("air_quality_area_text").innerHTML = "Normal";
+			if(rcsJsonString["airQuality"] === undefined) return;
+			document.getElementById("svg-status-id").classList.remove('status-good', 'status-normal', 'status-poor', 'status-very-poor')
+			if (rcsJsonString["airQuality"] <= 25) {
+				document.getElementById("svg-status-id").classList.add('status-very-poor')
+			} else if (rcsJsonString["airQuality"] <= 50) {
+				document.getElementById("svg-status-id").classList.add('status-poor')
+			} else if (rcsJsonString["airQuality"] <= 75) {
+				document.getElementById("svg-status-id").classList.add('status-normal')
 			} else {
-				document.getElementById("svg-status-id").src = "res/air_purifier_mode_circle_01.svg";
-				document.getElementById("air_quality_area_text").innerHTML = "Good";
+				document.getElementById("svg-status-id").classList.add('status-good')
 			}
+			document.getElementById("air_quality_area_text").innerHTML = rcsJsonString["airQuality"];
 		}
 	}
 }

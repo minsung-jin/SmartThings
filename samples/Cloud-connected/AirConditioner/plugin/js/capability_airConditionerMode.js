@@ -29,15 +29,15 @@ var capabilityAirConditionerMode = {
 			var mode = [];
 			mode = rcsJsonString["modes"];
 			switch(mode[0]) {
-				case 'auto': document.getElementById("comboMode").value = "Auto" ; break;
-				case 'cool': document.getElementById("comboMode").value = "Cool" ; break;
-				case 'coolClean': document.getElementById("comboMode").value = "CoolClean" ; break;
-				case 'dry': document.getElementById("comboMode").value = "Dry" ; break;
-				case 'dryClean': document.getElementById("comboMode").value = "DryClean" ; break;
-				case 'fanOnly': document.getElementById("comboMode").value = "FanOnly" ; break;
-				case 'heat': document.getElementById("comboMode").value = "Heat" ; break;
-				case 'heatClean': document.getElementById("comboMode").value = "HeatClean" ; break;
-				case 'notSupported': document.getElementById("comboMode").value = "NotSupported" ; break
+				case 'auto': document.getElementById("valueMode").innerHTML = "Auto" ; break;
+				case 'cool': document.getElementById("valueMode").innerHTML = "Cool" ; break;
+				case 'coolClean': document.getElementById("valueMode").innerHTML = "CoolClean" ; break;
+				case 'dry': document.getElementById("valueMode").innerHTML = "Dry" ; break;
+				case 'dryClean': document.getElementById("valueMode").innerHTML = "DryClean" ; break;
+				case 'fanOnly': document.getElementById("valueMode").innerHTML = "FanOnly" ; break;
+				case 'heat': document.getElementById("valueMode").innerHTML = "Heat" ; break;
+				case 'heatClean': document.getElementById("valueMode").innerHTML = "HeatClean" ; break;
+				case 'notSupported': document.getElementById("valueMode").innerHTML = "NotSupported" ; break;
 			}
 		}
 	},

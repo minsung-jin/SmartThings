@@ -26,6 +26,45 @@ window.onload = function () {
 function init() {
 	console.log("-----------init-----------");
 	scplugin.manager.getOCFDevices(getOCFDeviceCB);
+
+	document.getElementById("buttonMode").addEventListener("click", function(){
+		var modalData = '<div class="box">'
+		modalData += '<div class="has-text-weight-bold">MODE</div>';
+		var modes = ["Auto", "Quick", "Rinse", "Dry"];
+		var btnMode = document.getElementById('valueMode')
+
+		var arrayLength = modes.length;
+		for (var i = 0; i < arrayLength; i++) {
+			modalData += '<div class="margin-top-s margin-bottom-s'
+			if (btnMode.innerHTML === modes[i])
+				modalData += ' has-text-link"';
+			else
+				modalData += '"';
+
+			modalData += 'onclick="onSelectMode(\'' + modes[i].toLowerCase() + '\')">' + modes[i] + '</div>'
+		}
+
+		modalData += '<div onClick="closeBottomSheet()" class="has-text-right has-text-weight-bold has-text-link">Cancel</div>';
+		modalData += '<div id="bottomSheetLoading" class="modal" style="position: absolute;"><div class="modal-background" style="background-color: rgba(255,255,255,0.6);"></div><div class="loader modal-content"></div></div>'
+		modalData += '</div>'
+		document.getElementById("bottomSheetContent").innerHTML = modalData
+		document.getElementById("bottomSheetBody").classList.add('is-active')
+	});
+}
+
+function showLoading()
+{
+	document.getElementById("bottomSheetLoading").classList.add('is-active')
+}
+
+function hideLoading()
+{
+	document.getElementById("bottomSheetLoading").classList.remove('is-active')
+}
+
+function closeBottomSheet()
+{
+	document.getElementById("bottomSheetBody").classList.remove('is-active')
 }
 
 function getOCFDeviceCB(devices) {
@@ -48,7 +87,12 @@ function getOCFDeviceCB(devices) {
 function onRepresentCallback(result, deviceHandle, uri, rcsJsonString) {
     for (var i = 0; i < capabilities.length; i++) {
         if ( capabilities[i].href == uri) {
-            capabilities[i].onRepresentCallback(result, deviceHandle, uri, rcsJsonString);
+			capabilities[i].onRepresentCallback(result, deviceHandle, uri, rcsJsonString);
+			if (capabilities[i] === capabilityDishwasherMode)
+			{
+				hideLoading()
+				closeBottomSheet()
+			}
         }
     }
 }
@@ -60,7 +104,7 @@ function setMainDevice(device) {
 }
 
 function backAction() {
-  scplugin.manager.close();
+	scplugin.manager.close();
 }
 
 function onPowerBtnClicked() {
@@ -76,5 +120,33 @@ function onCancelClicked() {
 }
 
 function onSelectMode(selectedItem) {
-	capabilityDishwasherMode.set(selectedItem.value);
+	showLoading();
+	capabilityDishwasherMode.set(selectedItem);
+}
+
+// Dropdowns
+
+function getAll(selector) {
+	return Array.prototype.slice.call(document.querySelectorAll(selector), 0);
+}
+
+var $dropdowns = getAll('.dropdown:not(.is-hoverable)');
+
+if ($dropdowns.length > 0) {
+	$dropdowns.forEach(function ($el) {
+		$el.addEventListener('click', function (event) {
+			event.stopPropagation();
+			$el.classList.toggle('is-active');
+		});
+	});
+
+	document.addEventListener('click', function (event) {
+		closeDropdowns();
+	});
+}
+
+function closeDropdowns() {
+	$dropdowns.forEach(function ($el) {
+		$el.classList.remove('is-active');
+	});
 }

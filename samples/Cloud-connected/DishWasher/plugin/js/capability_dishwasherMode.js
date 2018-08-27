@@ -24,9 +24,18 @@ var capabilityDishwasherMode = {
 	'onRepresentCallback' : function(result, deviceHandle, uri, rcsJsonString) {
 		scplugin.log.debug(className, arguments.callee.name, result);
 		scplugin.log.debug(className, arguments.callee.name, uri);
+		//console.log(rcsJsonString["modes"]);
 
 		if (result == "OCF_OK" || result == "OCF_RESOURCE_CHANGED" || result == "OCF_RES_ALREADY_SUBSCRIBED") {
-			document.getElementById("comboMode").value = rcsJsonString["modes"];
+			if(rcsJsonString["modes"] === undefined) return;
+			var mode = [];
+			mode = rcsJsonString["modes"];
+
+			if(typeof(rcsJsonString["modes"])==="object"){
+				document.getElementById("valueMode").innerHTML = rcsJsonString["modes"][0].charAt(0).toUpperCase() + rcsJsonString["modes"][0].slice(1);
+			}else{
+				document.getElementById("valueMode").innerHTML = rcsJsonString["modes"].charAt(0).toUpperCase() + rcsJsonString["modes"].slice(1);
+			}
 		}
 	},
 
