@@ -16,7 +16,7 @@
 
 var ocfDevice;
 var className = "AirPurifier";
-var capabilities = [capabilitySwitch, capabilityFanspeed, capabilityAirQualitySensor, capabilityDustSensor, capabilityOdorSensor, capabilityFilterStatus, capabilityEnergyMeter];
+var capabilities = [capabilitySwitch, capabilityAirQualitySensor, capabilityDustSensor, capabilityOdorSensor, capabilityFanspeed, capabilityFilterStatus, capabilityEnergyMeter];
 
 window.onload = function () {
 	console.log("version : 0.0.1");
@@ -31,7 +31,7 @@ function init() {
 		var modalData = '<div class="box">'
 		modalData += '<div class="has-text-weight-bold">Fan Speed</div>';
 		var fanSpeed = ["High", "Medium", "Low", "Sleep"];
-		var currentFanSpeed = document.getElementById('valueFanSpeed')
+		var currentFanSpeed = document.getElementById('fanSpeed')
 
 		var arrayLength = fanSpeed.length;
 		for (var i = 0; i < arrayLength; i++) {
@@ -40,7 +40,7 @@ function init() {
 				modalData += ' has-text-link"';
 			else
 				modalData += '"';
-			
+
 			modalData += 'onclick="onSelectFanSpeed(\'' + fanSpeed[i] + '\')">' + fanSpeed[i] + '</div>'
 		}
 
@@ -112,16 +112,7 @@ function onPowerBtnClicked() {
 
 function onSelectFanSpeed(fanSpeed) {
 	showLoading();
-
-	if(fanSpeed == "High") {
-		capabilityFanspeed.set(100);
-	} else if(fanSpeed == "Medium") {
-		capabilityFanspeed.set(75);
-	} else if (fanSpeed == "Low") {
-		capabilityFanspeed.set(50);
-	} else if(fanSpeed == "Sleep") {
-		capabilityFanspeed.set(25);
-	}
+	capabilityFanspeed.set(fanSpeed);
 }
 
 // Dropdowns

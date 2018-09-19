@@ -53,22 +53,8 @@
 				<div class="modal-content" style="width: 100%; margin: 0 0;" id="bottomSheetContent"></div>
 			</div>
 
-			<!-- fan speed combo area-->
-			<div class="columns is-mobile is-centered margin-top-xxl">
-				<div class="column is-narrow">
-					<div class="dropdown is-active">
-						<div class="dropdown-trigger">
-							<button class="button is-rounded" id="buttonFanSpeed">
-								<span id="valueFanSpeed">High</span>
-								<span class="icon"><i class="fas fa-angle-down fa-xs has-text-info" aria-hidden="true"></i></span>
-							</button>
-						</div>
-					</div>
-				</div>
-			</div>
-
 			<!-- air quality circle area-->
-			<div class="columns is-mobile is-centered margin-bottom-xl margin-top-xl">
+			<div class="columns is-mobile is-centered padding-left-xxl padding-top-xl margin-left-s margin-bottom-xl margin-top-xl">
 				<div class="column is-narrow main_container svg-status status-good" id="svg-status-id">
 					<br/>
 					<div class="has-text-white has-text-centered has-text-weight-semibold">INDOOR</div>
@@ -97,12 +83,32 @@
 		<!-- Right -->
 		<div class="dividecolumn rightSide">
 			<hr class="is-hidden-tablet" />
+			<!-- Fan Speed -->
+			<div class="columns is-marginless is-mobile margin-left-s">
+				<div class="column is-narrow is-vertical-center">
+					<figure class="image is-32x32">
+						<img src="res/function_ic_fan_speed.svg">
+					</figure>
+				</div>
+				<div class="column is-narrow">
+					<p>Fan speed</p>
+					<p class="is-size-7 has-text-info" id="fanSpeed">Medium</p>
+				</div>
+				<div class="column">
+					<button id="buttonFanSpeed" class="button is-pulled-right margin-right-s is-white" style="margin-top: 5px !important;">
+						<span class="icon is-small">
+							<img width="50" height="50" src="res/list_ic_arrow.svg">
+						</span>
+					</button>
+				</div>
+			</div>
+			<hr/>
 
 			<!-- Filter State -->
 			<div class="columns is-mobile margin-left-s is-marginless">
 				<div class="column is-narrow">
 					<figure class="image is-32x32">
-						<img src="res/ic_function_Filter_State.svg">
+						<img src="res/function_ic_filter.svg">
 					</figure>
 				</div>
 				<div class="column is-narrow">
@@ -117,7 +123,7 @@
 			<div class="columns is-mobile margin-left-s is-marginless">
 				<div class="column is-narrow">
 					<figure class="image is-32x32">
-						<img src="res/ic_function_Energy_Consumption.svg">
+						<img src="res/function_ic_energy_meter.svg">
 					</figure>
 				</div>
 				<div class="column is-narrow">
@@ -125,6 +131,7 @@
 					<p class="is-size-7 has-text-info" id="energyMeter">20kwh</p>
 				</div>
 			</div>
+			<hr/>
 		</div>
 	</body>
 

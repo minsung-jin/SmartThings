@@ -27,21 +27,30 @@ var capabilityFanspeed = {
 
 		if (result == "OCF_OK" || result == "OCF_RESOURCE_CHANGED" || result == "OCF_RES_ALREADY_SUBSCRIBED") {
 			if (rcsJsonString["fanSpeed"] <= 25)
-				document.getElementById("valueFanSpeed").innerHTML = "Sleep";
+				document.getElementById("fanSpeed").innerHTML = "Sleep";
 			else if (rcsJsonString["fanSpeed"] <= 50)
-				document.getElementById("valueFanSpeed").innerHTML = "Low";
+				document.getElementById("fanSpeed").innerHTML = "Low";
 			else if (rcsJsonString["fanSpeed"] <= 75)
-				document.getElementById("valueFanSpeed").innerHTML = "Medium";
+				document.getElementById("fanSpeed").innerHTML = "Medium";
 			else
-				document.getElementById("valueFanSpeed").innerHTML = "High";
+				document.getElementById("fanSpeed").innerHTML = "High";
 		}
 	},
 
 	'set' : function(speed) {
-		console.log ("fan speed : " + speed);
+		scplugin.log.debug(className, arguments.callee.name, "speed : " + speed);
 		var setRcsJson = {};
-		setRcsJson["fanSpeed"] = speed;
-		scplugin.log.debug(className, arguments.callee.name, setRcsJson);
+
+		if (speed == "High")
+			setRcsJson["fanSpeed"] = 100;
+		else if (speed == "Medium")
+			setRcsJson["fanSpeed"] = 75;
+		else if (speed == "Low")
+			setRcsJson["fanSpeed"] = 50;
+		else
+			setRcsJson["fanSpeed"] = 25;
+
 		ocfDevice.setRemoteRepresentation(this.href, setRcsJson, this.onRepresentCallback);
+		this.closeListbox();
 	}
 }
