@@ -1,6 +1,6 @@
 #%RAML 0.8
-title: WWST Dust sensor level
-version: v1.0.0-20170911
+title: WWST Object Detection
+version: v1.0.0-20181113
 documentation:
   - title: Copyright (c) 2018 Samsung Electronics Co., Ltd. All rights reserved.
   	       Copyright (c) 2016 Open Connectivity Foundation, Inc. All rights reserved.
@@ -11,74 +11,72 @@ documentation:
 
 	      THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE OR WARRANTIES OF NON-INFRINGEMENT, ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
 schemas:
-- DustLevel: |
+- ObjectDetection: |
     {
-      "id": "http://www.samsung.com/schemas/x.com.st.dustlevel.json#",
+      "id": "http://www.samsung.com/schemas/x.com.st.objectDetection.json#",
       "$schema": "http://json-schema.org/draft-04/schema#",
-      "description" : "Copyright (c) 2016, 2017 Open Connectivity Foundation, Inc. All rights reserved.",
-      "title": "Air Quality Sensor Level",
+      "description" : "Copyright (c) 2016, 2017, 2018 SmartThings. All rights reserved.",
+      "title": "WWST Object Detection",
       "definitions": {
-        "x.com.st.dustlevel": {
+        "x.com.st.objectDetection": {
           "type": "object",
           "properties": {
-            "fineDustLevel": {
-              "type": "number",
-              "description": "A value representation of PM 2.5, micrograms per cubic meter"
-            },
-            "fineDustUnit": {
+            "value":{
               "type": "string",
-              "enum": ["レg/m^3"],
-              "description": "The unit of fine dust measured"
+              "description": "The object detected class value"
             },
-            "dustLevel": {
-              "type": "number",
-              "description": "A value representation of PM 10, micrograms per cubic meter"
+            "supportedValues": {
+              "type": "array",
+              "readOnly": true,
+              "items": {
+                "type": "string"
+              },
+              "description": "Array of possible values that can be detected."
             },
-            "dustUnit": {
-              "type": "string",
-              "enum": ["レg/m^3"],
-              "description": "The unit of dust measured"
+            "qty": {
+              "type": "integer",
+              "description": "The number of detected objects"
+            },
+            "data": {
+              "type": "object",
+              "description": "Object detection details"
             }
+
           }
         }
       },
       "type": "object",
       "allOf": [
         {"$ref": "oic.baseResource.json#/definitions/oic.r.baseresource"},
-        {"$ref": "#/definitions/x.com.st.dustlevel"}
+        {"$ref": "#/definitions/x.com.st.objectDetection"}
       ],
-      "required": [
-        "fineDustLevel",
-        "dustLevel"
-      ]
+      "required": ["value", "supportedValues"]
     }
-
 traits:
   - interface:
       queryParameters:
         if:
-          enum: ["oic.if.s","oic.if.baseline"]
+          enum: ["oic.if.s", "oic.if.baseline"]
 
-/WWSTDustsensorlevelesURI:
+/WWSTObjectDetectionResURI:
   description: |
-        Dust sensor level
-  displayName: WWST Dust sensor level
+      Retrieve the current objects that are detected
+  displayName: WWST Object Detection
   is: [ interface ]
 
   get:
     description: |
-      Retrieves the current Dust sensor level
+      The current objects that are detected
     responses:
       200:
         body:
           application/json:
-            schema: DustLevel
+            schema: ObjectDetection
             example: |
               {
-                "rt":             ["x.com.st.dustlevel"],
-                "id":             "unique_example_id",
-                "fineDustLevel" : 10,
-                "fineDustUnit" : "レg/m^3",
-                "dustLevel" : 10,
-                "dustUnit" : "レg/m^3"
-              }
+                "rt": ["x.com.st.objectDetection"],
+                "id": "unique_example_id",
+                "value": "human",
+                "supportedValues": ["none", "human", "pet"],
+                "qty": 1
+                }

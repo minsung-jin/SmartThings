@@ -1,6 +1,6 @@
 #%RAML 0.8
-title: WWST Player modes
-version: v1.0.0-20170911
+title: WWST Language Setting
+version: v1.0.0-20180928
 documentation:
   - title: Copyright (c) 2018 Samsung Electronics Co., Ltd. All rights reserved.
   	       Copyright (c) 2016 Open Connectivity Foundation, Inc. All rights reserved.
@@ -11,31 +11,27 @@ documentation:
 
 	      THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE OR WARRANTIES OF NON-INFRINGEMENT, ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
 schemas:
-- Mode: |
+- Language: |
     {
-      "id": "http://www.samsung.com/schemas/x.com.st.mediaplayer.json#",
+      "id": "http://www.samsung.com/schemas/x.com.st.languageSetting.json#",
       "$schema": "http://json-schema.org/draft-04/schema#",
-      "description": "Copyright (c) 2016, 2017 Open Connectivity Foundation, Inc. All rights reserved.",
-      "title": "WWST Mode",
+      "description": "Copyright (c) 2016, 2017, 2018 SmartThings. All rights reserved.",
+      "title": "WWST Language Setting",
       "definitions": {
-        "x.com.st.mediaplayer": {
+        "x.com.st.languageSetting": {
           "type": "object",
           "properties": {
-            "supportedModes": {
+            "supportedLanguages": {
               "type": "array",
               "readOnly": true,
-              "description": "Array of possible modes the device supports.",
-              "items": {
-                "type": "string",
-                "enum": ["stop", "play", "pause", "fast forward", "rewind"]
-              }
-            },
-            "modes": {
-              "type": "array",
-              "description": "Array of the currently active mode(s)",
+              "description": "Languages supported by the device",
               "items": {
                 "type": "string"
               }
+            },
+            "language": {
+              "description": "The current language of the device",
+              "type": "string"
             }
           }
         }
@@ -46,30 +42,26 @@ schemas:
           "$ref": "oic.baseResource.json#/definitions/oic.r.baseresource"
         },
         {
-          "$ref": "#/definitions/x.com.st.mediaplayer"
+          "$ref": "#/definitions/x.com.st.languageSetting"
         }
       ],
       "required": [
-        "supportedModes",
-        "modes"
+        "supportedLanguages"
       ]
     }
-- ModeUpdate: |
+- LanguageUpdate: |
     {
-      "id": "http://www.samsung.com/schemas/x.com.st.mediaplayer.json#",
+      "id": "http://www.samsung.com/schemas/x.com.st.languageSetting.json#",
       "$schema": "http://json-schema.org/draft-04/schema#",
-      "description": "Copyright (c) 2016, 2017 Open Connectivity Foundation, Inc. All rights reserved.",
-      "title": "WWST Mode Update",
+      "description": "Copyright (c) 2016, 2017, 2018 SmartThings. All rights reserved.",
+      "title": "WWST Language Setting Update",
       "definitions": {
-        "x.com.st.mediaplayer": {
+        "x.com.st.languageSetting": {
           "type": "object",
           "properties": {
-            "modes": {
-              "type": "array",
-              "description": "Desired mode",
-              "items": {
-                "type": "string"                
-              }
+            "language": {
+              "description": "The current language of the device",
+              "type": "string"
             }
           }
         }
@@ -80,11 +72,11 @@ schemas:
           "$ref": "oic.baseResource.json#/definitions/oic.r.baseresource"
         },
         {
-          "$ref": "#/definitions/x.com.st.mediaplayer"
+          "$ref": "#/definitions/x.com.st.languageSetting"
         }
       ],
       "required": [
-        "modes"
+        "language"
       ]
     }
 
@@ -94,61 +86,60 @@ traits:
         if:
           enum: ["oic.if.a","oic.if.s","oic.if.baseline"]
 
-/WWSTPlayermodesResURI:
+/WWSTLanguageSettingResURI:
   description: |
-        Player Control
-  displayName: WWST Player modes
+        Language Setting
+  displayName: WWST Language Setting
   is: [ interface ]
 
   get:
     description: |
-      Retrieves the current player modes
+      Retrieves the current language setting
     responses:
       200:
         body:
           application/json:
-            schema: Mode
+            schema: Language
             example: |
               {
-                "rt":             ["x.com.st.mediaplayer"],
+                "rt":             ["x.com.st.languageSetting"],
                 "id":             "unique_example_id",
-                "modes": [ "play" ],
-                "supportedModes": ["stop", "play", "pause", "fast forward", "rewind"]
+                "supportedLanguages": [ "en", "ko" ],
+                "language": "en"
               }
 
   post:
     description: |
-      Sets the desired player modes
+      Sets the desired language setting
     body:
       application/json:
-        schema: ModeUpdate
+        schema: LanguageUpdate
         example: |
           {
             "id":    "unique_example_id",
-            "modes": ["play"]
+            "language": "ko"
           }
     responses:
       200:
         body:
           application/json:
-            schema: ModeUpdate
+            schema: LanguageUpdate
             example: |
               {
                 "id":    "unique_example_id",
-                "modes": ["play"]
+                "language": "ko"
               }
-
       403:
         description: |
           This response is generated by the OIC Server when the client sends:
-            An update with an value for mode that is not found in supportedModes.
+            An update with an value for language that is not found in supportedLanguages.
           The server responds with the current resource representation.
         body:
           application/json:
-            schema: Mode
+            schema: Language
             example: |
               {
                 "id":             "unique_example_id",
-                "modes": [ "rewind" ],
-                "supportedModes": ["stop", "play", "pause"]
+                "supportedLanguages": ["en"],
+                "language": "ko"
               }

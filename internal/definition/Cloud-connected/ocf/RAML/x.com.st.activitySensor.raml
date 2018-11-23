@@ -1,6 +1,6 @@
 #%RAML 0.8
-title: WWST Dust sensor level
-version: v1.0.0-20170911
+title: ST Activity Sensor
+version: v1.1.0-20181011
 documentation:
   - title: Copyright (c) 2018 Samsung Electronics Co., Ltd. All rights reserved.
   	       Copyright (c) 2016 Open Connectivity Foundation, Inc. All rights reserved.
@@ -11,74 +11,55 @@ documentation:
 
 	      THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE OR WARRANTIES OF NON-INFRINGEMENT, ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
 schemas:
-- DustLevel: |
+- ActivitySensor: |
     {
-      "id": "http://www.samsung.com/schemas/x.com.st.dustlevel.json#",
+      "id": "http://samsung.com/schemas/x.com.st.activitySensor.json#",
       "$schema": "http://json-schema.org/draft-04/schema#",
-      "description" : "Copyright (c) 2016, 2017 Open Connectivity Foundation, Inc. All rights reserved.",
-      "title": "Air Quality Sensor Level",
+      "description" : "Copyright (c) 2016, 2017, 2018 SmartThings. All rights reserved.",
+      "title": "ST Activity Sensor",
       "definitions": {
-        "x.com.st.dustlevel": {
+        "x.com.st.activitySensor": {
           "type": "object",
           "properties": {
-            "fineDustLevel": {
-              "type": "number",
-              "description": "A value representation of PM 2.5, micrograms per cubic meter"
-            },
-            "fineDustUnit": {
+            "activity": {
               "type": "string",
-              "enum": ["レg/m^3"],
-              "description": "The unit of fine dust measured"
-            },
-            "dustLevel": {
-              "type": "number",
-              "description": "A value representation of PM 10, micrograms per cubic meter"
-            },
-            "dustUnit": {
-              "type": "string",
-              "enum": ["レg/m^3"],
-              "description": "The unit of dust measured"
+              "enum": ["falling", "lying", "sitting", "standing", "eating"],
+              "description":"The current state of the activity sensor"
             }
           }
         }
       },
       "type": "object",
       "allOf": [
+        {"$ref": "oic.core.json#/definitions/oic.core"},
         {"$ref": "oic.baseResource.json#/definitions/oic.r.baseresource"},
-        {"$ref": "#/definitions/x.com.st.dustlevel"}
+        {"$ref": "#/definitions/x.com.st.activitySensor"}
       ],
-      "required": [
-        "fineDustLevel",
-        "dustLevel"
-      ]
+      "required": ["activity"]
     }
-
 traits:
   - interface:
       queryParameters:
         if:
           enum: ["oic.if.s","oic.if.baseline"]
 
-/WWSTDustsensorlevelesURI:
+/WWSTActivitySensorResURI:
   description: |
-        Dust sensor level
-  displayName: WWST Dust sensor level
+        Activity Sensor
+  displayName: WWST Activity Sensor
   is: [ interface ]
 
   get:
     description: |
-      Retrieves the current Dust sensor level
+      Retrieves the current state of the activity sensor
     responses:
       200:
         body:
           application/json:
-            schema: DustLevel
+            schema: ActivitySensor
             example: |
               {
-                "rt":             ["x.com.st.dustlevel"],
-                "id":             "unique_example_id",
-                "fineDustLevel" : 10,
-                "fineDustUnit" : "レg/m^3",
-                "dustLevel" : 10,
-                "dustUnit" : "レg/m^3"
+                "rt": ["x.com.st.activitySensor"],
+                "id": "unique_example_id",
+                "activity" : "falling"
               }

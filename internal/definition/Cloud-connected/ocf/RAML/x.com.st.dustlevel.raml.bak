@@ -27,7 +27,7 @@ schemas:
             },
             "fineDustUnit": {
               "type": "string",
-              "enum": ["¥ìg/m^3"],
+              "enum": ["µg/m^3"],
               "description": "The unit of fine dust measured"
             },
             "dustLevel": {
@@ -36,7 +36,7 @@ schemas:
             },
             "dustUnit": {
               "type": "string",
-              "enum": ["¥ìg/m^3"],
+              "enum": ["µg/m^3"],
               "description": "The unit of dust measured"
             }
           }
@@ -78,7 +78,7 @@ traits:
                 "rt":             ["x.com.st.dustlevel"],
                 "id":             "unique_example_id",
                 "fineDustLevel" : 10,
-                "fineDustUnit" : "¥ìg/m^3",
+                "fineDustUnit" : "µg/m^3",
                 "dustLevel" : 10,
-                "dustUnit" : "¥ìg/m^3"
+                "dustUnit" : "µg/m^3"
               }

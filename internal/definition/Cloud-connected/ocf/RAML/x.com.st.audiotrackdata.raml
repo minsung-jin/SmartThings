@@ -21,10 +21,6 @@ schemas:
         "x.com.st.audiotrackdata": {
           "type": "object",
           "properties": {
-            "station": {
-              "type": "string",
-              "description": "Specifies the station of media"
-            },
             "title": {
               "type": "string",
               "description": "Specifies the title of media track"
@@ -37,21 +33,21 @@ schemas:
               "type": "string",
               "description": "Specifies the album of media track"
             },
-            "trackNumber": {
+            "albumArtUrl": {
+              "type": "string",
+              "description": "url of the album art"
+            },
+            "totalTime": {
               "type": "integer",
-              "description": "Specifies the trackNumber of media track"
+              "description": "Track length in seconds"
             },
-            "trackUri": {
-              "type": "string",
-              "description": "Specifies the trackUri of media track"
+            "elapsedTime": {
+              "type": "integer",
+              "description": "Track elapsed in seconds"
             },
-            "trackDescription": {
+            "mediaSource": {
               "type": "string",
-              "description": "Specifies the trackDescription of media track"
-            },
-            "thumbnail": {
-              "type": "string",
-              "description": "url of the thumbnail"
+              "description": "Specifies the media source of media track"
             }
           }
         }
@@ -70,13 +66,13 @@ traits:
 
 /WWSTMediaTrackInfoResURI:
   description: |
-        Media infomation
-  displayName: WWST Media Track Info
+        Audio track infomation
+  displayName: WWST Audio Track Data
   is: [ interface ]
 
   get:
     description: |
-      Retrieves the current media track info
+      Retrieves the current audio track data
     responses:
       200:
         body:
@@ -86,12 +82,11 @@ traits:
               {
                 "rt": ["x.com.st.audiotrackdata"],
                 "id": "unique_example_id",
-                "station": "",
                 "title": "Example title",
-                "artist": "Example title",
-                "album": "",
-                "trackNumber": "",
-                "trackUri": "",
-                "trackDescription": "",
-                "thumbnail": ""
+                "artist": "Example artist",
+                "album": "Example album",
+                "albumArtUrl": "",
+                "totalTime": 190,
+                "elapsedTime": 20,
+                "mediaSource": "Pandora"
               }

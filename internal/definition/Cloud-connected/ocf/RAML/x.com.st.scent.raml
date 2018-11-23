@@ -1,6 +1,6 @@
 #%RAML 0.8
-title: WWST Audio volume
-version: v1.0.0-20170911
+title:  STScent
+version: v1.1.1-20180731
 documentation:
   - title: Copyright (c) 2018 Samsung Electronics Co., Ltd. All rights reserved.
   	       Copyright (c) 2016 Open Connectivity Foundation, Inc. All rights reserved.
@@ -11,120 +11,116 @@ documentation:
 
 	      THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE OR WARRANTIES OF NON-INFRINGEMENT, ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
 schemas:
-- Audio: |
+- Scent: |
     {
-      "id": "http://openinterconnect.org/iotdatamodels/schemas/x.com.st.audiovolume.json#",
+      "id": "http://openinterconnect.org/iotdatamodels/schemas/x.com.st.scent.json#",
       "$schema": "http://json-schema.org/draft-04/schema#",
-      "description": "Copyright (c) 2016, 2017 Open Connectivity Foundation, Inc. All rights reserved.",
+      "description": "Copyright (c) 2016 Open Connectivity Foundation, Inc. All rights reserved.",
+      "title": "Scent",
       "definitions": {
-        "x.com.st.audiovolume": {
+        "x.com.st.scent": {
           "type": "object",
           "properties": {
-            "volume": {
-              "type": "integer",
-              "description": "Volume setting of an audio rendering device.",
+            "scentName": {
+              "type": "string",
+              "description": "A string that represents the name of the scent",
+              "readOnly": true
+            },
+            "scentIntensity": {
+              "type": "number",
+              "description": "A number that represents the current scent intensity, usually in percent",
               "minimum": 0,
               "maximum": 100
-            },
-            "command": {
-              "type": "string",
-              "enum": [
-                "increase",
-                "decrease",
-                "max",
-                "min"
-              ],
-              "description": "Comand for controlling"
             }
           }
         }
       },
       "type": "object",
       "allOf": [
-        {
-          "$ref": "oic.baseResource.json#/definitions/oic.r.baseresource"
-        },
-        {
-          "$ref": "#/definitions/x.com.st.audiovolume"
-        }
+        {"$ref": "oic.core.json#/definitions/oic.core"},
+        {"$ref": "oic.baseResource.json#/definitions/oic.r.baseresource"},
+        {"$ref": "#/definitions/x.com.st.scent"}
       ],
-      "required": [
-        "volume"
-      ]
+      "required": ["scentName", "scentIntensity"]
     }
 
-- AudioUpdate: |
+- ScentUpdate: |
     {
-      "id": "http://openinterconnect.org/iotdatamodels/schemas/x.com.st.audiovolume.json#",
+      "id": "http://openinterconnect.org/iotdatamodels/schemas/x.com.st.scent.json#",
       "$schema": "http://json-schema.org/draft-04/schema#",
-      "description": "Copyright (c) 2016, 2017 Open Connectivity Foundation, Inc. All rights reserved.",
+      "description": "Copyright (c) 2016 Open Connectivity Foundation, Inc. All rights reserved.",
+      "title": "Scent",
       "definitions": {
-        "x.com.st.audiovolume": {
+        "x.com.st.scent": {
           "type": "object",
           "properties": {
-            "volume": {
-              "type": "integer",
-              "description": "Volume setting of an audio rendering device.",
+            "scentName": {
+              "type": "string",
+              "description": "A string that represents the name of the scent",
+              "readOnly": true
+            },
+            "scentIntensity": {
+              "type": "number",
+              "description": "A number that represents the current scent intensity, usually in percent",
               "minimum": 0,
               "maximum": 100
-            },
-            "command": {
-              "type": "string",
-              "enum": ["increase", "decrease", "max", "min"],
-              "description": "Comand for controlling"
-            }
+          }
           }
         }
       },
       "type": "object",
       "allOf": [
+        {"$ref": "oic.core.json#/definitions/oic.core"},
         {"$ref": "oic.baseResource.json#/definitions/oic.r.baseresource"},
-        {"$ref": "#/definitions/x.com.st.audiovolume"}
-      ]
+        {"$ref": "#/definitions/x.com.st.scent"}
+      ],
+      "required": ["scentIntensity"]
     }
 traits:
   - interface:
       queryParameters:
         if:
-          enum: ["oic.if.a","oic.if.baseline"]
-
-/WWSTAudiovolumeResURI:
+          enum: ["oic.if.a", "oic.if.s", "oic.if.baseline"]
+/STScentResURI:
   description: |
-        Volume control for TV, Networ speakers, etc
-  displayName: WWST Audio volume
-  is: [ interface ]
+    Resource describing a scent.
+  displayName: Scent
+  is: [ interface ] # valid for all methods
 
   get:
     description: |
-      Retrieves the current Audio volume
+      Retrieves the state of the scent.
     responses:
       200:
         body:
           application/json:
-            schema: Audio
+            schema: Scent
             example: |
               {
-                "rt": ["x.com.st.audiovolume"],
-                "id": "unique_example_id",
-                "volume": 20
+                "rt":         ["x.com.st.scent"],
+                "id":         "unique_example_id",
+                "scentName": "Lavender",
+                "scentIntensity": 50
               }
-
   post:
+    description: |
+      Sets the desired scent intensity
     body:
       application/json:
-        schema: AudioUpdate
+        schema: ScentUpdate
         example: |
           {
-            "id": "unique_example_id",
-            "volume": 75
+            "id":           "unique_example_id",
+            "scentIntensity":  50
           }
     responses:
       200:
         body:
           application/json:
-            schema: AudioUpdate
+            schema: Scent
             example: |
               {
-                "id": "unique_example_id",
-                "volume": 75
+                "id":        "unique_example_id",
+                "scentName": "Lavender",
+                "scentIntensity": 50
               }

@@ -1,6 +1,6 @@
 #%RAML 0.8
-title: WWST Audio volume
-version: v1.0.0-20170911
+title: STChime
+version: v0.0.1-20181016
 documentation:
   - title: Copyright (c) 2018 Samsung Electronics Co., Ltd. All rights reserved.
   	       Copyright (c) 2016 Open Connectivity Foundation, Inc. All rights reserved.
@@ -11,120 +11,84 @@ documentation:
 
 	      THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE OR WARRANTIES OF NON-INFRINGEMENT, ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
 schemas:
-- Audio: |
+- Chime: |
     {
-      "id": "http://openinterconnect.org/iotdatamodels/schemas/x.com.st.audiovolume.json#",
+      "id": "http://www.samsung.com/schemas/x.com.st.chime.json#",
       "$schema": "http://json-schema.org/draft-04/schema#",
-      "description": "Copyright (c) 2016, 2017 Open Connectivity Foundation, Inc. All rights reserved.",
+      "description": "Copyright (c) 2016, 2017, 2018 SmartThings. All rights reserved.",
+      "title": "Chime",
       "definitions": {
-        "x.com.st.audiovolume": {
+        "x.com.st.chime": {
           "type": "object",
           "properties": {
-            "volume": {
-              "type": "integer",
-              "description": "Volume setting of an audio rendering device.",
-              "minimum": 0,
-              "maximum": 100
-            },
-            "command": {
+            "chime": {
               "type": "string",
-              "enum": [
-                "increase",
-                "decrease",
-                "max",
-                "min"
-              ],
-              "description": "Comand for controlling"
+              "enum": ["chime", "off"],
+              "description": "A string representation of whether the chime is active or off"
             }
           }
         }
       },
       "type": "object",
       "allOf": [
+        {
+          "$ref": "oic.core.json#/definitions/oic.core"
+        },
         {
           "$ref": "oic.baseResource.json#/definitions/oic.r.baseresource"
         },
         {
-          "$ref": "#/definitions/x.com.st.audiovolume"
+          "$ref": "#/definitions/x.com.st.chime"
         }
       ],
-      "required": [
-        "volume"
-      ]
-    }
-
-- AudioUpdate: |
-    {
-      "id": "http://openinterconnect.org/iotdatamodels/schemas/x.com.st.audiovolume.json#",
-      "$schema": "http://json-schema.org/draft-04/schema#",
-      "description": "Copyright (c) 2016, 2017 Open Connectivity Foundation, Inc. All rights reserved.",
-      "definitions": {
-        "x.com.st.audiovolume": {
-          "type": "object",
-          "properties": {
-            "volume": {
-              "type": "integer",
-              "description": "Volume setting of an audio rendering device.",
-              "minimum": 0,
-              "maximum": 100
-            },
-            "command": {
-              "type": "string",
-              "enum": ["increase", "decrease", "max", "min"],
-              "description": "Comand for controlling"
-            }
-          }
-        }
-      },
-      "type": "object",
-      "allOf": [
-        {"$ref": "oic.baseResource.json#/definitions/oic.r.baseresource"},
-        {"$ref": "#/definitions/x.com.st.audiovolume"}
-      ]
+      "required": ["chime"]
     }
 traits:
   - interface:
       queryParameters:
         if:
-          enum: ["oic.if.a","oic.if.baseline"]
+          enum: ["oic.if.baseline", "oic.if.a"]
 
-/WWSTAudiovolumeResURI:
+/WWSTChime:
   description: |
-        Volume control for TV, Networ speakers, etc
-  displayName: WWST Audio volume
+        This resource allows for the control of a chime switch device
+  displayName: WWST chime
   is: [ interface ]
 
   get:
     description: |
-      Retrieves the current Audio volume
+      Retrieves a string representation of whether the chime is active or off
     responses:
       200:
         body:
           application/json:
-            schema: Audio
+            schema: Chime
             example: |
               {
-                "rt": ["x.com.st.audiovolume"],
+                "rt": ["x.com.st.chime"],
                 "id": "unique_example_id",
-                "volume": 20
+                "chime":  "chime"
               }
 
   post:
+    description: |
+      Sets the chime status
     body:
       application/json:
-        schema: AudioUpdate
+        schema: Chime
         example: |
           {
-            "id": "unique_example_id",
-            "volume": 75
+            "id":     "unique_id",
+            "chime":  "off"
           }
     responses:
       200:
         body:
           application/json:
-            schema: AudioUpdate
+            schema: Chime
             example: |
               {
+                "rt": ["x.com.st.chime"],
                 "id": "unique_example_id",
-                "volume": 75
+                "chime":  "off"
               }

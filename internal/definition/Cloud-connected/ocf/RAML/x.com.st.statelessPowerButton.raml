@@ -1,6 +1,6 @@
 #%RAML 0.8
-title: WWST Player modes
-version: v1.0.0-20170911
+title: WWST Stateless Power Button
+version: v1.0.0-20180823
 documentation:
   - title: Copyright (c) 2018 Samsung Electronics Co., Ltd. All rights reserved.
   	       Copyright (c) 2016 Open Connectivity Foundation, Inc. All rights reserved.
@@ -11,31 +11,29 @@ documentation:
 
 	      THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE OR WARRANTIES OF NON-INFRINGEMENT, ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
 schemas:
-- Mode: |
+- Button: |
     {
-      "id": "http://www.samsung.com/schemas/x.com.st.mediaplayer.json#",
+      "id": "http://www.samsung.com/schemas/x.com.st.statelessPowerButton.json#",
       "$schema": "http://json-schema.org/draft-04/schema#",
-      "description": "Copyright (c) 2016, 2017 Open Connectivity Foundation, Inc. All rights reserved.",
-      "title": "WWST Mode",
+      "description": "Copyright (c) 2016, 2017, 2018 SmartThings. All rights reserved.",
+      "title": "WWST Stateless Power Button",
       "definitions": {
-        "x.com.st.mediaplayer": {
+        "x.com.st.statelessPowerButton": {
           "type": "object",
           "properties": {
-            "supportedModes": {
+            "availableButtons": {
               "type": "array",
               "readOnly": true,
-              "description": "Array of possible modes the device supports.",
+              "description": "Array of possible buttons the device supports.",
               "items": {
                 "type": "string",
-                "enum": ["stop", "play", "pause", "fast forward", "rewind"]
+                "enum": ["powerOn", "powerOff"]
               }
             },
-            "modes": {
-              "type": "array",
-              "description": "Array of the currently active mode(s)",
-              "items": {
-                "type": "string"
-              }
+            "button": {
+              "description": "Desired button",
+              "type": "string",              
+              "enum": ["powerOn", "powerOff"]
             }
           }
         }
@@ -46,30 +44,27 @@ schemas:
           "$ref": "oic.baseResource.json#/definitions/oic.r.baseresource"
         },
         {
-          "$ref": "#/definitions/x.com.st.mediaplayer"
+          "$ref": "#/definitions/x.com.st.statelessPowerButton"
         }
       ],
       "required": [
-        "supportedModes",
-        "modes"
+        "availableButtons"
       ]
     }
-- ModeUpdate: |
+- ButtonUpdate: |
     {
-      "id": "http://www.samsung.com/schemas/x.com.st.mediaplayer.json#",
+      "id": "http://www.samsung.com/schemas/x.com.st.statelessPowerButton.json#",
       "$schema": "http://json-schema.org/draft-04/schema#",
-      "description": "Copyright (c) 2016, 2017 Open Connectivity Foundation, Inc. All rights reserved.",
-      "title": "WWST Mode Update",
+      "description": "Copyright (c) 2016, 2017, 2018 SmartThings. All rights reserved.",
+      "title": "WWST Stateless Power Button Update",
       "definitions": {
-        "x.com.st.mediaplayer": {
+        "x.com.st.statelessPowerButton": {
           "type": "object",
           "properties": {
-            "modes": {
-              "type": "array",
-              "description": "Desired mode",
-              "items": {
-                "type": "string"                
-              }
+            "button": {
+              "description": "Desired button",
+              "type": "string",              
+              "enum": ["powerOn", "powerOff"]
             }
           }
         }
@@ -80,11 +75,11 @@ schemas:
           "$ref": "oic.baseResource.json#/definitions/oic.r.baseresource"
         },
         {
-          "$ref": "#/definitions/x.com.st.mediaplayer"
+          "$ref": "#/definitions/x.com.st.statelessPowerButton"
         }
       ],
       "required": [
-        "modes"
+        "button"
       ]
     }
 
@@ -94,61 +89,60 @@ traits:
         if:
           enum: ["oic.if.a","oic.if.s","oic.if.baseline"]
 
-/WWSTPlayermodesResURI:
+/WWSTStatelessPowerButtonResURI:
   description: |
-        Player Control
-  displayName: WWST Player modes
+        Stateless Power Button
+  displayName: WWST Stateless Power Button
   is: [ interface ]
 
   get:
     description: |
-      Retrieves the current player modes
+      Retrieves the current Stateless Power Button
     responses:
       200:
         body:
           application/json:
-            schema: Mode
+            schema: Button
             example: |
               {
-                "rt":             ["x.com.st.mediaplayer"],
+                "rt":             ["x.com.st.statelessPowerButton"],
                 "id":             "unique_example_id",
-                "modes": [ "play" ],
-                "supportedModes": ["stop", "play", "pause", "fast forward", "rewind"]
+                "availableButtons": [ "powerOn", "powerOff" ],
+                "button": "powerOn"
               }
 
   post:
     description: |
-      Sets the desired player modes
+      Sets the desired Stateless Power Button
     body:
       application/json:
-        schema: ModeUpdate
+        schema: ButtonUpdate
         example: |
           {
             "id":    "unique_example_id",
-            "modes": ["play"]
+            "button": "powerOn"
           }
     responses:
       200:
         body:
           application/json:
-            schema: ModeUpdate
+            schema: ButtonUpdate
             example: |
               {
                 "id":    "unique_example_id",
-                "modes": ["play"]
+                "button": "powerOn"
               }
-
       403:
         description: |
           This response is generated by the OIC Server when the client sends:
-            An update with an value for mode that is not found in supportedModes.
+            An update with an value for button that is not found in availableButtons.
           The server responds with the current resource representation.
         body:
           application/json:
-            schema: Mode
+            schema: Button
             example: |
               {
                 "id":             "unique_example_id",
-                "modes": [ "rewind" ],
-                "supportedModes": ["stop", "play", "pause"]
+                "availableButtons": [],
+                "button": "powerOn"
               }
