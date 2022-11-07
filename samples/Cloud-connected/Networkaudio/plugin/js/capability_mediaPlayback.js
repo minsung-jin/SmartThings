@@ -27,13 +27,14 @@ var capabilityMediaPlayback = {
 		scplugin.log.debug(className, arguments.callee.name, uri);
 
 		if (result == "OCF_OK" || result == "OCF_RESOURCE_CHANGED" || result == "OCF_RES_ALREADY_SUBSCRIBED") {
+			if(rcsJsonString["modes"] === undefined) return;
 			capabilityMediaPlayback.value = rcsJsonString["modes"];
 
 			var image = document.getElementById("playbutton");
-			if (this.value == "play") {
-				image.style.content = "url(res/controller_ic_pause.svg)";
+			if (this.value != "pause") {
+				image.classList.remove('paused');
 			} else {
-				image.style.content = "url(res/controller_ic_play.svg)";
+				image.classList.add('paused');
 			}
 		}
 	},
@@ -46,7 +47,7 @@ var capabilityMediaPlayback = {
 	},
 
 	'toggle' : function() {
-		if (this.value == "play") {
+		if (this.value == "play" || this.value == "stop") {
 			this.set("pause");
 		} else {
 			this.set("play");

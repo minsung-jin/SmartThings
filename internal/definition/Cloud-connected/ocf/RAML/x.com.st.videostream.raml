@@ -1,0 +1,87 @@
+#%RAML 0.8
+title: STVideostream
+version: v1.1.1-20180707
+documentation:
+- title: Copyright (c) 2018 Samsung Electronics Co., Ltd. All rights reserved.
+  	       Copyright (c) 2016 Open Connectivity Foundation, Inc. All rights reserved.
+    content: |
+        Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+        1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+        2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+
+	      THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE OR WARRANTIES OF NON-INFRINGEMENT, ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+schemas:
+- videostream: |
+    {
+      "id": "http://www.samsung.com/schemas/x.com.st.videostream.json#",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "description": "Copyright (c) 2016, SmartThings. All rights reserved.",
+      "title": "WWST video stream",
+      "definitions": {
+        "x.com.st.videostream": {
+          "type": "object",
+          "properties": {
+            "liveStream": {
+              "type": "boolean"
+            }
+          }
+        }
+      },
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "oic.core.json#/definitions/oic.core"
+        },
+        {
+          "$ref": "oic.baseResource.json#/definitions/oic.r.baseresource"
+        },
+        {
+          "$ref": "#/definitions/x.com.st.videostream"
+        }
+      ],
+      "required": [
+        "liveStream"
+      ]
+    }
+traits:
+  - interface :
+      queryParameters:
+        if:
+          enum: ["oic.if.baseline","oic.if.a"]
+/VideoStream:
+  displayName: WWST video stream
+  description: |
+    Allows for the control of the video stream.
+  is : ['interface']
+  post:
+    description: |
+      Start/Stop the video stream
+
+    body:
+      application/json:
+        schema: videostream
+        example: |
+          {
+            "id": "unique_example_id",
+            "liveStream":	true
+          }
+    responses :
+      200:
+        body:
+          application/json:
+            schema: videostream
+            example: |
+              {
+                "rt": ["x.com.st.videostream"],
+                "id": "unique_example_id",
+                "liveStream":	true
+              }
+      403:
+        body:
+          application/json:
+            schema: Exception
+            example: |
+              {
+                "code": "OCF_01",
+                "message": "Failed to process OCF request!"
+              }

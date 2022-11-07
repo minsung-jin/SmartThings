@@ -2,14 +2,14 @@
 title: WWST Media Track Info
 version: v1.0.0-20170911
 documentation:
-  - title: Copyright (c) 2018 Samsung Electronics Co., Ltd. All rights reserved.
+- title: Copyright (c) 2018 Samsung Electronics Co., Ltd. All rights reserved.
   	       Copyright (c) 2016 Open Connectivity Foundation, Inc. All rights reserved.
     content: |
         Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
         1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
         2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
 
-	      THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE OR WARRANTIES OF NON-INFRINGEMENT, ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
+	      THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE OR WARRANTIES OF NON-INFRINGEMENT, ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 schemas:
 - Mode: |
     {
@@ -21,10 +21,6 @@ schemas:
         "x.com.st.audiotrackdata": {
           "type": "object",
           "properties": {
-            "station": {
-              "type": "string",
-              "description": "Specifies the station of media"
-            },
             "title": {
               "type": "string",
               "description": "Specifies the title of media track"
@@ -37,21 +33,21 @@ schemas:
               "type": "string",
               "description": "Specifies the album of media track"
             },
-            "trackNumber": {
+            "albumArtUrl": {
+              "type": "string",
+              "description": "url of the album art"
+            },
+            "totalTime": {
               "type": "integer",
-              "description": "Specifies the trackNumber of media track"
+              "description": "Track length in seconds"
             },
-            "trackUri": {
-              "type": "string",
-              "description": "Specifies the trackUri of media track"
+            "elapsedTime": {
+              "type": "integer",
+              "description": "Track elapsed in seconds"
             },
-            "trackDescription": {
+            "mediaSource": {
               "type": "string",
-              "description": "Specifies the trackDescription of media track"
-            },
-            "thumbnail": {
-              "type": "string",
-              "description": "url of the thumbnail"
+              "description": "Specifies the media source of media track"
             }
           }
         }
@@ -70,13 +66,13 @@ traits:
 
 /WWSTMediaTrackInfoResURI:
   description: |
-        Media infomation
-  displayName: WWST Media Track Info
+        Audio track infomation
+  displayName: WWST Audio Track Data
   is: [ interface ]
 
   get:
     description: |
-      Retrieves the current media track info
+      Retrieves the current audio track data
     responses:
       200:
         body:
@@ -86,12 +82,11 @@ traits:
               {
                 "rt": ["x.com.st.audiotrackdata"],
                 "id": "unique_example_id",
-                "station": "",
                 "title": "Example title",
-                "artist": "Example title",
-                "album": "",
-                "trackNumber": "",
-                "trackUri": "",
-                "trackDescription": "",
-                "thumbnail": ""
+                "artist": "Example artist",
+                "album": "Example album",
+                "albumArtUrl": "",
+                "totalTime": 190,
+                "elapsedTime": 20,
+                "mediaSource": "Pandora"
               }

@@ -32,10 +32,10 @@ var capabilitySwitch = {
 			var image = document.getElementById("power_icon_back_circle");
 			if (capabilitySwitch.powerState == "on") {
 				image.style.background="#3695dd";
-		    image.style.opacity="1";
+		    	image.style.opacity="1";
 			} else {
-				image.style.background="#252525";
-		    image.style.opacity="0.2";
+				image.style.background="#3695dd";
+		    	image.style.opacity="0.2";
 			}
 		}
 	},

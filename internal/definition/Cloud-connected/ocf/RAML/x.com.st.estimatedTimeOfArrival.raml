@@ -1,0 +1,67 @@
+#%RAML 0.8
+title: STEstimatedTimeOfArrival
+version: v1.0.0-20180827
+documentation:
+- title: Copyright (c) 2018 Samsung Electronics Co., Ltd. All rights reserved.
+  	       Copyright (c) 2016 Open Connectivity Foundation, Inc. All rights reserved.
+    content: |
+        Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+        1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+        2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+
+	      THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE OR WARRANTIES OF NON-INFRINGEMENT, ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+schemas:
+- ETA: |
+    {
+      "id": "http://www.samsung.com/schemas/x.com.st.estimatedTimeOfArrival.json#",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "title": "Estimated Time of Arrival",
+      "definitions": {
+        "x.com.st.estimatedTimeOfArrival": {
+          "properties": {
+            "eta": {
+              "type": "integer",
+              "description": "The estimated time of arrival"
+            }
+          }
+        }
+      },
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "oic.core.json#/definitions/oic.core"
+        },
+        {
+          "$ref": "oic.baseResource.json#/definitions/oic.r.baseResource"
+        },
+        {
+          "$ref": "#/definitions/x.com.st.estimatedTimeOfArrival"
+        }
+      ],
+      "required": [
+        "eta"
+      ]
+    }
+traits:
+- interface:
+    queryParameters:
+     if:
+          enum: ["oic.if.baseline","oic.if.s"]
+/EstimatedTimeOfArrival:
+  description: Allow access to estimated time of arrival values for devices that support it, for example automobiles
+  displayName: Estimated Time of Arrival
+  is: [ interface ]
+  get:
+    description: |
+      Retrieved estimated time of arrival
+    responses:
+      200:
+        body:
+          application/json:
+            schema: ETA
+            example: |
+              {
+                "rt":     "x.com.st.estimatedTimeOfArrival",
+                "id":     "unique_example_id",
+                "eta":  1503374528
+              }

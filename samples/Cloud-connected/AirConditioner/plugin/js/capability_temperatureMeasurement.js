@@ -16,7 +16,6 @@
 
 var capabilityTemperatureMeasurement_main = {
 	'href' : "/capability/temperatureMeasurement/main/0",
-	'temperature' : 25,
 
 	'update' : function() {
 		ocfDevice.getRemoteRepresentation(this.href, this.onRepresentCallback);
@@ -27,15 +26,8 @@ var capabilityTemperatureMeasurement_main = {
 		scplugin.log.debug(className, arguments.callee.name, uri);
 
 		if (result == "OCF_OK" || result == "OCF_RESOURCE_CHANGED" || result == "OCF_RES_ALREADY_SUBSCRIBED") {
-			var range = rcsJsonString["range"];
-			if (rcsJsonString["temperature"] > range[1])
-				capabilityTemperatureMeasurement_main.temperature = range[1];
-			else if (rcsJsonString["temperature"] < range[0])
-				capabilityTemperatureMeasurement_main.temperature = range[0];
-			else
-				capabilityTemperatureMeasurement_main.temperature = rcsJsonString["temperature"];
-
-			document.getElementById("currentTemp").innerHTML = Math.round(capabilityTemperatureMeasurement_main.temperature);
+			if(rcsJsonString["temperature"] === undefined) return;
+			document.getElementById("currentTemp").innerHTML = rcsJsonString["temperature"];
 			document.getElementById("currentUnit").innerHTML = "°" + rcsJsonString["units"];
 		}
 	}

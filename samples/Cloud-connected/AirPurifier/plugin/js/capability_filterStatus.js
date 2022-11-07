@@ -26,6 +26,7 @@ var capabilityFilterStatus = {
 		scplugin.log.debug(className, arguments.callee.name, uri);
 
 		if (result == "OCF_OK" || result == "OCF_RESOURCE_CHANGED" || result == "OCF_RES_ALREADY_SUBSCRIBED") {
+			if(rcsJsonString["currentMachineState"] === undefined) return;
 			document.getElementById("filter_state").innerHTML = rcsJsonString["currentMachineState"];
 		}
 	}

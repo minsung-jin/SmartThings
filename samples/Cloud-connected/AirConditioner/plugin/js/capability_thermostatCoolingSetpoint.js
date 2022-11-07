@@ -18,7 +18,6 @@ var capabilityThermostatCoolingSetpoint = {
 	'href' : "/capability/thermostatCoolingSetpoint/main/0",
 	'desieredTemperature' : 25,
 	'unit' : "C",
-	'range' : [0, 100],
 
 	'update' : function() {
 		ocfDevice.getRemoteRepresentation(this.href, this.onRepresentCallback);
@@ -29,16 +28,10 @@ var capabilityThermostatCoolingSetpoint = {
 		scplugin.log.debug(className, arguments.callee.name, uri);
 
 		if (result == "OCF_OK" || result == "OCF_RESOURCE_CHANGED" || result == "OCF_RES_ALREADY_SUBSCRIBED") {
-			capabilityThermostatCoolingSetpoint.range = rcsJsonString["range"];
-			if (rcsJsonString["temperature"] > capabilityThermostatCoolingSetpoint.range[1])
-				capabilityThermostatCoolingSetpoint.desieredTemperature = capabilityThermostatCoolingSetpoint.range[1];
-			else if (rcsJsonString["temperature"] < capabilityThermostatCoolingSetpoint.range[0])
-				capabilityThermostatCoolingSetpoint.desieredTemperature = capabilityThermostatCoolingSetpoint.range[0];
-			else
-				capabilityThermostatCoolingSetpoint.desieredTemperature = rcsJsonString["temperature"];
-
+			if(rcsJsonString["temperature"] === undefined) return;
+			capabilityThermostatCoolingSetpoint.desieredTemperature = rcsJsonString["temperature"];
 			capabilityThermostatCoolingSetpoint.unit = rcsJsonString["units"];
-			document.getElementById("coolingsetTemp").innerHTML = Math.round(capabilityThermostatCoolingSetpoint.desieredTemperature);
+			document.getElementById("coolingsetTemp").innerHTML = capabilityThermostatCoolingSetpoint.desieredTemperature;
 
 			if (rcsJsonString["units"] == "K") {
 				document.getElementById("coolingsetUnit").innerHTML = "°K";
@@ -54,17 +47,15 @@ var capabilityThermostatCoolingSetpoint = {
 
 	'increase' : function() {
 		console.log ("increase: " + this.desieredTemperature);
-		if (this.desieredTemperature < this.range[1])
-			this.desieredTemperature += 1;
-
+		if (this.desieredTemperature == 100) return;
+		this.desieredTemperature += 1;
 		this.set(this.desieredTemperature,this.unit);
 	},
 
 	'decrease' : function() {
 		console.log ("decrease: " + this.desieredTemperature);
-		if (this.desieredTemperature > this.range[0])
-			this.desieredTemperature -= 1;
-
+		if (this.desieredTemperature == 0) return;
+		this.desieredTemperature -= 1;
 		this.set(this.desieredTemperature,this.unit);
 	},
 

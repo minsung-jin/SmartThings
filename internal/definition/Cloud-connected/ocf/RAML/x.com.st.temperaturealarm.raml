@@ -1,0 +1,70 @@
+#%RAML 0.8
+title: WWST Temperature alarm
+version: v1.0.0-20180504
+documentation:
+- title: Copyright (c) 2018 Samsung Electronics Co., Ltd. All rights reserved.
+  	       Copyright (c) 2016 Open Connectivity Foundation, Inc. All rights reserved.
+    content: |
+        Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+        1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+        2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+
+	      THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE OR WARRANTIES OF NON-INFRINGEMENT, ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+schemas:
+- TemperatureAlarm: |
+    {
+        "id": "http://www.samsung.com/schemas/x.com.st.termperaturealarm.json#",
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "description" : "Copyright (c) 2016, 2017 Open Connectivity Foundation, Inc. All rights reserved.",
+        "title": "Temperature alarm",
+        "definitions": {
+            "x.com.st.termperaturealarm": {
+                "type": "object",
+                "properties": {
+                    "temperatureAlarm": {
+                        "type": "string",
+                        "enum": [
+                            "cleared",
+                            "freeze",
+                            "heat",
+                            "rateOfRise"
+                        ],
+                        "description": "State of the temperature alarm."
+                    }
+                }
+            }
+        },
+        "type": "object",
+        "allOf": [
+            {"$ref": "oic.baseResource.json#/definitions/oic.r.baseresource"},
+            {"$ref": "#/definitions/x.com.st.termperaturealarm"}
+        ],
+        "required": ["temperatureAlarm"]
+    }
+
+    traits:
+        - interface:
+            queryParameters:
+                if:
+                    enum: ["oic.if.s","oic.if.baseline"]
+
+/WWSTTemperatureAlarmResURI:
+    description: |
+        Temperature alarm
+    displayName: WWST Temperature alarm
+    is: [ interface ]
+
+    get:
+        description: |
+            Retrieves the state of the temperature alarm
+        responses:
+            200:
+                body:
+                    application/json:
+                        schema: TemperatureAlarm
+                        example: |
+                            {
+                                "rt":             ["x.com.st.temperaturealarm"],
+                                "id":             "unique_example_id",
+                                "temperatureAlarm" : "cleared"
+                            }

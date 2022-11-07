@@ -1,0 +1,82 @@
+#%RAML 0.8
+title: WWST Object Detection
+version: v1.0.0-20181113
+documentation:
+- title: Copyright (c) 2018 Samsung Electronics Co., Ltd. All rights reserved.
+  	       Copyright (c) 2016 Open Connectivity Foundation, Inc. All rights reserved.
+    content: |
+        Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+        1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+        2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+
+	      THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE OR WARRANTIES OF NON-INFRINGEMENT, ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+schemas:
+- ObjectDetection: |
+    {
+      "id": "http://www.samsung.com/schemas/x.com.st.objectDetection.json#",
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "description" : "Copyright (c) 2016, 2017, 2018 SmartThings. All rights reserved.",
+      "title": "WWST Object Detection",
+      "definitions": {
+        "x.com.st.objectDetection": {
+          "type": "object",
+          "properties": {
+            "value":{
+              "type": "string",
+              "description": "The object detected class value"
+            },
+            "supportedValues": {
+              "type": "array",
+              "readOnly": true,
+              "items": {
+                "type": "string"
+              },
+              "description": "Array of possible values that can be detected."
+            },
+            "qty": {
+              "type": "integer",
+              "description": "The number of detected objects"
+            },
+            "data": {
+              "type": "object",
+              "description": "Object detection details"
+            }
+
+          }
+        }
+      },
+      "type": "object",
+      "allOf": [
+        {"$ref": "oic.baseResource.json#/definitions/oic.r.baseresource"},
+        {"$ref": "#/definitions/x.com.st.objectDetection"}
+      ],
+      "required": ["value", "supportedValues"]
+    }
+traits:
+  - interface:
+      queryParameters:
+        if:
+          enum: ["oic.if.s", "oic.if.baseline"]
+
+/WWSTObjectDetectionResURI:
+  description: |
+      Retrieve the current objects that are detected
+  displayName: WWST Object Detection
+  is: [ interface ]
+
+  get:
+    description: |
+      The current objects that are detected
+    responses:
+      200:
+        body:
+          application/json:
+            schema: ObjectDetection
+            example: |
+              {
+                "rt": ["x.com.st.objectDetection"],
+                "id": "unique_example_id",
+                "value": "human",
+                "supportedValues": ["none", "human", "pet"],
+                "qty": 1
+                }

@@ -16,7 +16,6 @@
 
 var capabilitySwitchLevel = {
 	'href' : "/capability/switchLevel/main/0",
-	'dimmingsetting' : 0,
 
 	'update' : function() {
 		ocfDevice.getRemoteRepresentation(this.href, this.onRepresentCallback);
@@ -27,29 +26,15 @@ var capabilitySwitchLevel = {
 		scplugin.log.debug(className, arguments.callee.name, uri);
 
 		if (result == "OCF_OK" || result == "OCF_RESOURCE_CHANGED" || result == "OCF_RES_ALREADY_SUBSCRIBED") {
-			var range = rcsJsonString["range"];
-			if (rcsJsonString["dimmingSetting"] > range[1])
-				capabilitySwitchLevel.dimmingsetting = range[1];
-			else
-				capabilitySwitchLevel.dimmingsetting = rcsJsonString["dimmingSetting"];
-
-			var digit = capabilitySwitchLevel.dimmingsetting.toString();
-			if (digit.length > 10)
-				document.getElementById("switch_level_area_text").innerHTML = digit.substr(0,Math.floor(10)) + "...%";
-			else
-				document.getElementById("switch_level_area_text").innerHTML = digit + "%";
-
-			document.getElementById("dimmer_range").value = capabilitySwitchLevel.dimmingsetting;
-			document.getElementById("dimmer_range").min = range[0];
-			document.getElementById("dimmer_range").max = range[1];
-			document.getElementById("dimmer_range").step = rcsJsonString["step"];
+			if(rcsJsonString["dimmingSetting"] === undefined) return;
+			document.getElementById("switch_level_area_text").innerHTML = rcsJsonString["dimmingSetting"] + "%";
+			document.getElementById("dimmer_range").value = rcsJsonString["dimmingSetting"];
 
 			var dim = document.getElementById("dimmer_area_bg1");
-			dim.style.opacity = capabilitySwitchLevel.dimmingsetting / range[1];
+			dim.style.opacity = rcsJsonString["dimmingSetting"] * 0.01;
 
 			var styleText = "";
-			var dimming_temp = capabilitySwitchLevel.dimmingsetting / range[1] * 100;
-			styleText += '#' + 'dimmer_range' + '::-webkit-slider-runnable-track{background-size:' + parseInt(dimming_temp) + '% 100%} ';
+			styleText += '#' + 'dimmer_range' + '::-webkit-slider-runnable-track{background-size:' + rcsJsonString["dimmingSetting"] + '% 100%} ';
 			inlineStyle.textContent = styleText;
 		}
 	},

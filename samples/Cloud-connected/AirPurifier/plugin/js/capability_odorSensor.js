@@ -16,7 +16,6 @@
 
 var capabilityOdorSensor = {
 	'href' : "/capability/odorSensor/main/0",
-	'range' : [0, 100],
 
 	'update' : function() {
 		ocfDevice.getRemoteRepresentation(this.href, this.onRepresentCallback);
@@ -27,13 +26,12 @@ var capabilityOdorSensor = {
 		scplugin.log.debug(className, arguments.callee.name, uri);
 
 		if (result == "OCF_OK" || result == "OCF_RESOURCE_CHANGED" || result == "OCF_RES_ALREADY_SUBSCRIBED") {
-			capabilityOdorSensor.range = rcsJsonString["range"];
-			var temp = parseInt((capabilityOdorSensor.range[1] - capabilityOdorSensor.range[0]) / 4);
-			if (rcsJsonString["odorLevel"] <= capabilityOdorSensor.range[0] + temp * 1)
+			if(rcsJsonString["odorLevel"] === undefined) return;
+			if (rcsJsonString["odorLevel"] <= 1)
 				document.getElementById("odorLevel").innerHTML = "Good";
-			else if (rcsJsonString["odorLevel"] <= capabilityOdorSensor.range[0] + temp * 2)
+			else if (rcsJsonString["odorLevel"] <= 2)
 				document.getElementById("odorLevel").innerHTML = "Normal";
-			else if (rcsJsonString["odorLevel"] <= capabilityOdorSensor.range[0] + temp * 3)
+			else if (rcsJsonString["odorLevel"] <= 3)
 				document.getElementById("odorLevel").innerHTML = "Poor";
 			else
 				document.getElementById("odorLevel").innerHTML = "Very poor";

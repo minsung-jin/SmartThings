@@ -27,6 +27,7 @@ var capabilityMediaPlaybackShuffle = {
 		scplugin.log.debug(className, arguments.callee.name, uri);
 
 		if (result == "OCF_OK" || result == "OCF_RESOURCE_CHANGED" || result == "OCF_RES_ALREADY_SUBSCRIBED") {
+			if(rcsJsonString["mode"] === undefined) return;
 			capabilityMediaPlaybackShuffle.value = rcsJsonString["mode"];
 			if(capabilityMediaPlaybackShuffle.value == "enabled") {
 				document.getElementById("shuffle_check").checked = true;

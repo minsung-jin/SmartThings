@@ -16,7 +16,6 @@
 
 var capabilityFanspeed = {
 	'href' : "/capability/fanSpeed/main/0",
-	'range' : [0, 100],
 
 	'update' : function() {
 		ocfDevice.getRemoteRepresentation(this.href, this.onRepresentCallback);
@@ -27,25 +26,31 @@ var capabilityFanspeed = {
 		scplugin.log.debug(className, arguments.callee.name, uri);
 
 		if (result == "OCF_OK" || result == "OCF_RESOURCE_CHANGED" || result == "OCF_RES_ALREADY_SUBSCRIBED") {
-			capabilityFanspeed.range = rcsJsonString["range"];
-			var temp = parseInt((capabilityFanspeed.range[1] - capabilityFanspeed.range[0]) / 4);
-			if (rcsJsonString["fanSpeed"] <= capabilityFanspeed.range[0] + temp * 1)
-				document.getElementById("comboFanSpeed").value = "Sleep";
-			else if (rcsJsonString["fanSpeed"] <= capabilityFanspeed.range[0] + temp * 2)
-				document.getElementById("comboFanSpeed").value = "Low";
-			else if (rcsJsonString["fanSpeed"] <= capabilityFanspeed.range[0] + temp * 3)
-				document.getElementById("comboFanSpeed").value = "Medium";
+			if (rcsJsonString["fanSpeed"] <= 25)
+				document.getElementById("fanSpeed").innerHTML = "Sleep";
+			else if (rcsJsonString["fanSpeed"] <= 50)
+				document.getElementById("fanSpeed").innerHTML = "Low";
+			else if (rcsJsonString["fanSpeed"] <= 75)
+				document.getElementById("fanSpeed").innerHTML = "Medium";
 			else
-				document.getElementById("comboFanSpeed").value = "High";
+				document.getElementById("fanSpeed").innerHTML = "High";
 		}
 	},
 
 	'set' : function(speed) {
-		console.log ("fan speed : " + speed);
+		scplugin.log.debug(className, arguments.callee.name, "speed : " + speed);
 		var setRcsJson = {};
-		var temp = parseInt((this.range[1] - this.range[0]) / 4);
-		setRcsJson["fanSpeed"] = this.range[0] + temp * speed;
-		scplugin.log.debug(className, arguments.callee.name, setRcsJson);
+
+		if (speed == "High")
+			setRcsJson["fanSpeed"] = 100;
+		else if (speed == "Medium")
+			setRcsJson["fanSpeed"] = 75;
+		else if (speed == "Low")
+			setRcsJson["fanSpeed"] = 50;
+		else
+			setRcsJson["fanSpeed"] = 25;
+
 		ocfDevice.setRemoteRepresentation(this.href, setRcsJson, this.onRepresentCallback);
+		this.closeListbox();
 	}
 }

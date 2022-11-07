@@ -1,119 +1,171 @@
+<!DOCTYPE html>
 <html>
 	<head>
-		<!-- Stylesheet-->
-		<link rel="stylesheet" type="text/css" href="css/style.css" />
-
-		<!-- SAMSUNG CONNECT API -->
-		<script type="text/javascript" src="lib/SCPluginApi.js"></script>
-		<script type="text/javascript" src="js/capability_switch.js"></script>
-		<script type="text/javascript" src="js/capability_audioTrackData.js"></script>
-		<script type="text/javascript" src="js/capability_audioVolume.js"></script>
-		<script type="text/javascript" src="js/capability_mediaInputSource.js"></script>
-		<script type="text/javascript" src="js/capability_mediaPlayback.js"></script>
-		<script type="text/javascript" src="js/capability_mediaPlaybackRepeat.js"></script>
-		<script type="text/javascript" src="js/capability_mediaPlaybackShuffle.js"></script>
-		<script type="text/javascript" src="js/capability_mediaTrackControl.js"></script>
-		<script type="text/javascript" src="js/index.js"></script>
+		<!-- Stylesheet Template Bulma IO-->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>Network Audio</title>
+		<link rel="stylesheet" href="css/bulma.min.css">
+		<link rel="stylesheet" href="css/bulma-slider.min.css">
+		<link rel="stylesheet" href="css/bulma-switch.min.css">
+		<link rel="stylesheet" href="css/helper.css">
+		<link rel="stylesheet" href="css/all.css">
 	</head>
+
 	<body>
 		<!-- Action bar-->
-		<div id="action_bar">
-			<div id="action_bar_back_button" onclick="backAction()">
-				<img src="res/board_ic_arrow_left.png" style="width: 100%; height:auto;" id="icon_back"/>
+		<div class="columns is-marginless is-mobile" style="background-color:#fafafa;">
+			<div class="column is-narrow">
+				<figure class="image is-32x32 margin-left-s" onclick="backAction()">
+					<img src="res/board_ic_arrow_left.png">
+				</figure>
 			</div>
-		</div>
-
-		<!-- Hearder-->
-		<div id="Header_bar">
-			<div id="action_bar_title">
-				<div id="action_bar_title_sub" class="roboto-condensed-bold">HOME - LIVING ROOM</div>
-				<div id="action_bar_title_main" class="roboto-condensed-bold">NETWORK AUDIO</div>
+			<div class="column is-narrow is-paddingless margin-top-s">
+				<div class="has-text-weight-bold">Network Audio</div>
+				<div class="has-text-weight-bold has-text-grey-light is-size-7">Home - Living room</div>
 			</div>
-			<div id="power_icon_back_circle" onclick="onPowerBtnClicked()">
-				<img class="svg-class" src="res/ic_power.svg"></img>
-			</div>
-		</div>
-
-		<!-- networkaudio input source combo area-->
-		<div id="combo_area" align="center">
-			<select id="comboSource" class="mode_bar mode_bar_text roboto-condensed-bold" onchange="onSelectSource(this)">
-				<option value="AM">AM</option>
-				<option value="CD">CD</option>
-				<option value="FM">FM</option>
-				<option value="HDMI">HDMI</option>
-				<option value="HDMI2">HDMI2</option>
-				<option value="USB">USB</option>
-				<option value="YouTube">YouTube</option>
-				<option value="aux">aux</option>
-				<option value="bluetooth">bluetooth</option>
-				<option value="digital">digital</option>
-				<option value="melon">melon</option>
-				<option value="wifi">wifi</option>
-			</select>
-		</div>
-
-		<!-- thumbnail circle area-->
-		<div class="thumbnail">
-			<img class="image-cropper"/>
-		</div>
-		<div id="title" class="roboto-medium" align="center">Title</div>
-		<div id="artist" class="roboto-medium">CP name</div>
-
-
-		<div class="play_controller" align="center">
-			<span id="prevbutton" onclick="onPrevClicked()" >
-				<img class="prev_button">
-			</span>
-			<span id="playbutton" onclick="onPlayClicked()">
-				<img class="play_button">
-			</span>
-			<span id="nextbutton" onclick="onNextClicked()">
-				<img class="next_button">
-			</span>
-		</div>
-
-		<div id="volume_controller">
-			<span id="volumebutton" onclick="onVolumeClicked()">
-				<img class="volume_icon">
-			</span>
-			<input type="range" min="0" max="100" step="1" id="volume_value" onchange="InputVolume(this.id, this.value)">
-		</div>
-
-		<!-- functional table -->
-		<div class="function_item">
-			<div class="item_icon">
-					<img class ="repeat_icon">
-			</div>
-			<div class="item_body">
-				<div class="function_item_multiline">
-					<p class="function_item_multiline_1 roboto-condensed-regular">Repeat</p>
-					<p class="function_item_multiline_2 roboto-condensed-regular" id="repeat">All</p>
+			<div class="column">
+				<div class="dropdown is-right is-pulled-right">
+					<div class="dropdown-trigger">
+						<span class="icon is-small is-pulled-right margin-top-s">
+							<img width="50" height="50" src="res/option_ic_more.svg">
+						</span>
+					</div>
+					<div class="dropdown-menu">
+						<div class="dropdown-content">
+							<div class="dropdown-item">
+								<a href="information.html">Information</a>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
-			<div class="item_icon">
-				<img class ="arrow_icon" id="repeat_arrow" onclick="onSelectRepeate()">
-				<div id="repeat_listbox" class="repeat-listbox-content" onmouseout="closeListBox(this)">
-					<a id="off" onclick="onSelectOff()">Off</a>
-				  <a id="one" onclick="onSelectOne()">One</a>
-				  <a id="all" onclick="onSelectAll()">All</a>
-				 </div>
+		</div>
+
+		<hr/>
+
+		<!-- Left -->
+		<div class="dividecolumn leftSide padding-top-s padding-bottom-s border-right" style="background-color:#fafafa;">
+
+			<!-- Header-->
+			<span id="power_icon_back_circle" class="icon is-large is-pulled-right margin-right-s round-border" onclick="onPowerBtnClicked()">
+				<img width="50" height="50" src="res/ic_power.svg">
+			</span>
+
+			<div class="modal" style="align-items: flex-end;" id="bottomSheetBody">
+				<div class="modal-background"></div>
+				<div class="modal-content" style="width: 100%; margin: 0 0;" id="bottomSheetContent"></div>
+			</div>
+
+			<!-- fan speed combo area-->
+			<div class="columns is-mobile is-centered margin-top-xxl is-marginless">
+				<div class="column is-narrow">
+					<div class="dropdown is-active">
+						<div class="dropdown-trigger">
+							<button class="button is-rounded" id="buttonMode">
+								<span id="valueMode">AM</span>
+								<span class="icon"><i class="fas fa-angle-down fa-xs has-text-info" aria-hidden="true"></i></span>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- thumbnail circle area-->
+			<div class="columns is-mobile is-centered is-marginless">
+				<div class="column is-narrow">
+					<figure class="image is-128x128">
+						<img src="res/music.svg" />
+					</figure>
+				</div>
+			</div>
+
+			<center id="title">Title</center>
+			<center id="artist">CP name</center>
+
+			<div class="columns is-mobile is-centered" align="center">
+				<div class="column is-narrow">
+					<div class="play_controller">
+						<span onclick="onPrevClicked()">
+							<img width="58" height="58" src="res/controller_ic_prev.svg">
+						</span>
+
+						<span id="playbutton" class="play_button play-button" onclick="onPlayClicked()">
+						</span>
+
+						<span onclick="onNextClicked()">
+							<img width="58" height="58" src="res/controller_ic_next.svg">
+						</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="columns is-mobile is-centered" align="center">
+				<div class="column is-8">
+					<input class="slider is-fullwidth is-info is-small is-circle" step="1" type="range" id="volume_value" onchange="InputVolume(this.id, this.value)" style="--min: 0; --max: 100; --val: 50">
+				</div>
 			</div>
 		</div>
 
-		<div class="function_item">
-			<div class="item_icon">
-					<img class ="shuffle_icon">
-			</div>
-			<div class="item_body">
-				<div class="function_item_multiline">
-					<p class="function_item_multiline_1 roboto-condensed-regular">Shuffle</p>
-					<p class="function_item_multiline_2 roboto-condensed-regular" id="shuffle">Enable</p>
+		<!-- Right -->
+		<div class="dividecolumn rightSide">
+			<hr class="is-hidden-tablet" />
+
+			<!-- Repeat Option -->
+			<div class="columns is-mobile is-marginless margin-left-s">
+				<div class="column is-narrow">
+					<figure class="image is-32x32">
+						<img src="res/function_ic_media_repeat.svg">
+					</figure>
+				</div>
+				<div class="column is-narrow">
+					<p>Repeat</p>
+					<p class="is-size-7 has-text-info" id="repeat">All</p>
+				</div>
+				<div class="column">
+					<button id="buttonRepeat" class="button is-white is-pulled-right" >
+						<span class="icon is-small">
+							<img width="50" height="50" src="res/list_ic_arrow.svg">
+						</span>
+					</button>
 				</div>
 			</div>
-			<label class="switch">
-  			<input type="checkbox" id="shuffle_check" onclick="onClickShuffle(this)" checked>
-  			<span class="slider" ></span>
-			</label>
+
+			<hr/>
+
+			<!-- Shuffle Option -->
+			<div class="columns is-mobile is-marginless margin-left-s">
+				<div class="column is-narrow">
+					<figure class="image is-32x32">
+						<img src="res/function_ic_media_shuffle.svg">
+					</figure>
+				</div>
+				<div class="column">
+					<p>Shuffle</p>
+					<p class="is-size-7 has-text-info" id="shuffle">Enable</p>
+				</div>
+				<div class="field column margin-top-s">
+					<input type="checkbox" id="shuffle_check" name="shuffle_check" class="switch is-rounded is-info" checked="checked" onclick="onClickShuffle(this)">
+					<label class="is-pulled-right" for="shuffle_check"></label>
+				</div>
+			</div>
+
+			<hr/>
+			
 		</div>
 	</body>
+
+	<!-- SAMSUNG CONNECT API -->
+	<script type="text/javascript" src="lib/SCPluginApi.js"></script>
+	<script type="text/javascript" src="js/capability_switch.js"></script>
+	<script type="text/javascript" src="js/capability_audioTrackData.js"></script>
+	<script type="text/javascript" src="js/capability_audioVolume.js"></script>
+	<script type="text/javascript" src="js/capability_mediaInputSource.js"></script>
+	<script type="text/javascript" src="js/capability_mediaPlayback.js"></script>
+	<script type="text/javascript" src="js/capability_mediaPlaybackRepeat.js"></script>
+	<script type="text/javascript" src="js/capability_mediaPlaybackShuffle.js"></script>
+	<script type="text/javascript" src="js/capability_mediaTrackControl.js"></script>
+	<script type="text/javascript" src="js/bulma-slider.min.js"></script>
+	<script type="text/javascript" src="js/index.js"></script>
 </html>
